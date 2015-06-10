@@ -15,15 +15,7 @@
  */
 package com.bekwam.examples.javafx.oldscores;
 
-import org.apache.commons.lang3.BooleanUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Properties;
 
 /**
  * DAO for .oldscores flat files

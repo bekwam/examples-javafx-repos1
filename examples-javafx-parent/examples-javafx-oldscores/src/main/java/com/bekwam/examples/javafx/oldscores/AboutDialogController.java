@@ -21,8 +21,6 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 /**
  * Controller for About screen
@@ -30,8 +28,6 @@ import org.slf4j.LoggerFactory;
  * @author carl_000
  */
 public class AboutDialogController extends VBox {
-
-    private Logger logger = LoggerFactory.getLogger(AboutDialogController.class);
 
     @FXML
     public void close(ActionEvent evt) {
