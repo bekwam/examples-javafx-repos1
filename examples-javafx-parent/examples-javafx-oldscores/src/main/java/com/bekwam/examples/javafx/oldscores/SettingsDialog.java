@@ -15,16 +15,17 @@
  */
 package com.bekwam.examples.javafx.oldscores;
 
+import java.io.IOException;
+import java.lang.ref.WeakReference;
+
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import java.io.IOException;
-import java.lang.ref.WeakReference;
 
 /**
  * Dialog for Settings screen
@@ -38,7 +39,8 @@ public class SettingsDialog {
     private Stage stage;
     private SettingsDAO settingsDAO;
     private WeakReference<MainViewController> mainViewRef;
-
+    private SettingsDialogController settingsDialogController;
+    
     public void show() throws IOException {
 
         if( logger.isDebugEnabled() ) {
@@ -58,7 +60,8 @@ public class SettingsDialog {
 
             loader.load();
 
-            ((SettingsDialogController)loader.getController()).setSettingsDAO(settingsDAO);  // controller != root
+            settingsDialogController = (SettingsDialogController)loader.getController();
+            settingsDialogController.setSettingsDAO(settingsDAO);  // controller != root
 
             Scene scene = new Scene(vbox);
 
@@ -91,6 +94,8 @@ public class SettingsDialog {
 
             try {
                 settingsDAO.load();
+                settingsDialogController.update();
+                
             } catch(IOException exc) {
                 String msg = "Error loading settings from '" + settingsDAO.getAbsolutePath() + "'";
                 logger.error( msg, exc );

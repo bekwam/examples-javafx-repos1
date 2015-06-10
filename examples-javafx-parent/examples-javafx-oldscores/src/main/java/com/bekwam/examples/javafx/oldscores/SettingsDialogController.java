@@ -43,6 +43,18 @@ public class SettingsDialogController extends VBox {
     RadioButton rbRoundUp;
 
     @FXML
+    RadioButton rbRoundDown;
+    
+    public void update() {
+    
+    	if( settingsDAO.getRoundUp() ) {
+    		rbRoundUp.setSelected(true);
+    	} else {
+    		rbRoundDown.setSelected(true);
+    	}
+    }
+    
+    @FXML
     public void save(ActionEvent evt)  {
 
         boolean roundUp = rbRoundUp.isSelected();
@@ -57,9 +69,8 @@ public class SettingsDialogController extends VBox {
 
             logger.error( msg, exc );
 
-           Alert alert = new Alert(Alert.AlertType.ERROR, msg);
+            Alert alert = new Alert(Alert.AlertType.ERROR, msg);
             alert.showAndWait();
-
         }
 
         close(evt);

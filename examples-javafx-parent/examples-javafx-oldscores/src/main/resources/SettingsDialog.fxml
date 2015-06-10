@@ -14,7 +14,7 @@
                   <ToggleGroup fx:id="tgRoundScores" />
                </toggleGroup>
             </RadioButton>
-            <RadioButton mnemonicParsing="false" text="Round scores down" toggleGroup="$tgRoundScores" />
+            <RadioButton fx:id="rbRoundDown" mnemonicParsing="false" text="Round scores down" toggleGroup="$tgRoundScores" />
          </children>
          <VBox.margin>
             <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
