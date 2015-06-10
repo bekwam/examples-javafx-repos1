@@ -34,4 +34,9 @@
         </plugins>
     </build>
 
+    <organization>
+        <name>Bekwam, Inc</name>
+        <url>http://www.bekwam.com</url>
+    </organization>
+
 </project>
