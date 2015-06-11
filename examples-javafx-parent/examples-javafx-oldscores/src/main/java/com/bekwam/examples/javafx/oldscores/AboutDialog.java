@@ -51,7 +51,7 @@ public class AboutDialog {
             }
             stage = new Stage();
 
-            Parent p = FXMLLoader.load(getClass().getResource("/About.fxml"));
+            Parent p = FXMLLoader.load(getClass().getResource("/fxml/About.fxml"));
 
             Scene scene = new Scene(p);
 
@@ -62,7 +62,9 @@ public class AboutDialog {
                         if( logger.isDebugEnabled() ) {
                             logger.debug("[OPEN HELP]");
                         }
-                        mainViewRef.get().openHelpDialog();
+                        if( mainViewRef != null ) {
+                            mainViewRef.get().openHelpDialog();
+                        }
                     } catch (IOException exc) {
                         String msg = "error showing help dialog";
                         logger.error(msg);
@@ -100,6 +102,6 @@ public class AboutDialog {
     }
 
     public void setMainViewRef(MainViewController mainView) {
-        mainViewRef = new WeakReference<MainViewController>(mainView);
+        mainViewRef = new WeakReference<>(mainView);
     }
 }

@@ -13,7 +13,7 @@
          <children>
             <ImageView fitHeight="799.0" fitWidth="640.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@bk_youtube_cover.png" />
+                  <Image url="@../bk_youtube_cover.png" />
                </image>
             </ImageView>
             <BorderPane>

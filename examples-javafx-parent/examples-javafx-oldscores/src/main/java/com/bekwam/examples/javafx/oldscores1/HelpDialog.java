@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bekwam.examples.javafx.oldscores;
+package com.bekwam.examples.javafx.oldscores1;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -31,7 +31,7 @@ import java.io.IOException;
  */
 public class HelpDialog {
 
-    private Logger logger = LoggerFactory.getLogger(HelpDialog.class);
+    private final Logger logger = LoggerFactory.getLogger(HelpDialog.class);
 
     private Stage stage;
 
@@ -47,7 +47,7 @@ public class HelpDialog {
             }
             stage = new Stage();
 
-            Parent p = FXMLLoader.load(getClass().getResource("/fxml/Help.fxml"));
+            Parent p = FXMLLoader.load(getClass().getResource("/fxml1/Help.fxml"));
 
             Scene scene = new Scene(p);
             scene.getStylesheets().add("/styles.css");

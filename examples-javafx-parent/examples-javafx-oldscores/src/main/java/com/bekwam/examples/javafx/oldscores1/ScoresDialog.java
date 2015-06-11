@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bekwam.examples.javafx.oldscores;
+package com.bekwam.examples.javafx.oldscores1;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -33,7 +33,7 @@ import java.lang.ref.WeakReference;
  */
 public class ScoresDialog {
 
-    private Logger logger = LoggerFactory.getLogger(ScoresDialog.class);
+    private final Logger logger = LoggerFactory.getLogger(ScoresDialog.class);
 
     private Stage stage;
     private RecenteredDAO recenteredDAO;
@@ -54,7 +54,7 @@ public class ScoresDialog {
 
             ScoresDialogController vbox = new ScoresDialogController();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ScoresDialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml1/ScoresDialog.fxml"));
             loader.setRoot(vbox);
 
             loader.load();
@@ -77,7 +77,11 @@ public class ScoresDialog {
                         if( logger.isDebugEnabled() ) {
                             logger.debug("[OPEN HELP]");
                         }
-                        mainViewRef.get().openHelpDialog();
+                        if( mainViewRef != null ) {
+                            if( mainViewRef.get() != null ) {
+                                mainViewRef.get().openHelpDialog();
+                            }
+                        }
                     } catch (IOException exc) {
                         String msg = "error showing help dialog";
                         logger.error(msg);
@@ -121,7 +125,7 @@ public class ScoresDialog {
     public void setSettingsDAO(SettingsDAO settingsDAO) { this.settingsDAO = settingsDAO; }
 
     public void setMainViewRef(MainViewController mainView) {
-        mainViewRef = new WeakReference<MainViewController>(mainView);
+        mainViewRef = new WeakReference<>(mainView);
     }
 
 }

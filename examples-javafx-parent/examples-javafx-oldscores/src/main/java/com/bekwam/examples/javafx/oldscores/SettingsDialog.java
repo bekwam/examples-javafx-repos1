@@ -55,12 +55,12 @@ public class SettingsDialog {
 
             SettingsDialogController vbox = new SettingsDialogController();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/SettingsDialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/SettingsDialog.fxml"));
             loader.setRoot(vbox);
 
             loader.load();
 
-            settingsDialogController = (SettingsDialogController)loader.getController();
+            settingsDialogController = loader.getController();
             settingsDialogController.setSettingsDAO(settingsDAO);  // controller != root
 
             Scene scene = new Scene(vbox);
@@ -72,7 +72,10 @@ public class SettingsDialog {
                         if( logger.isDebugEnabled() ) {
                             logger.debug("[OPEN HELP]");
                         }
-                        mainViewRef.get().openHelpDialog();
+                        if( mainViewRef != null ) {
+                            mainViewRef.get().openHelpDialog();
+                        }
+
                     } catch (IOException exc) {
                         String msg = "error showing help dialog";
                         logger.error(msg);
@@ -126,7 +129,7 @@ public class SettingsDialog {
     }
 
     public void setMainViewRef(MainViewController mainView) {
-        mainViewRef = new WeakReference<MainViewController>(mainView);
+        mainViewRef = new WeakReference<>(mainView);
     }
 
 }

@@ -13,8 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bekwam.examples.javafx.oldscores;
+package com.bekwam.examples.javafx.oldscores1;
 
+import com.bekwam.javafx.guice.GuiceControllerFactory;
+import com.google.inject.Guice;
+import com.google.inject.Injector;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -22,19 +25,22 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.util.BuilderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
 /**
- * An application that compares standardized test scores from before 1995 with today's scores
+ * An application that compares standardized test scores before 1995 with today's scores
+ *
+ * A first refactor that adds in Google Guice and replaces Constants.java with Guice objects
  *
  * @author carl_000
  */
-public class OldScoresApplication extends Application {
+public class OldScoresApplication1 extends Application {
 
-    private Logger logger = LoggerFactory.getLogger(OldScoresApplication.class);
+    private final Logger logger = LoggerFactory.getLogger(OldScoresApplication1.class);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -43,7 +49,13 @@ public class OldScoresApplication extends Application {
             logger.debug("[START]");
         }
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/MainView.fxml"));
+        Injector injector = Guice.createInjector(new OldScoresModule());
+
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml1/MainView.fxml"),
+                                           null,
+                                           injector.getInstance(BuilderFactory.class),
+                                           injector.getInstance(GuiceControllerFactory.class));
+
         Parent p = loader.load();
         MainViewController mv = loader.getController();
 

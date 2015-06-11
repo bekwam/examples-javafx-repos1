@@ -13,9 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bekwam.examples.javafx.oldscores;
+package com.bekwam.examples.javafx.oldscores1;
 
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.input.KeyCode;
@@ -27,17 +28,15 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 /**
- * Dialog for Scores screen
+ * Dialog for About screen
  *
  * @author carl_000
  */
-public class ScoresDialog {
+public class AboutDialog {
 
-    private Logger logger = LoggerFactory.getLogger(ScoresDialog.class);
+    private final Logger logger = LoggerFactory.getLogger(AboutDialog.class);
 
     private Stage stage;
-    private RecenteredDAO recenteredDAO;
-    private SettingsDAO settingsDAO;
     private WeakReference<MainViewController> mainViewRef;
 
     public void show() throws IOException {
@@ -52,23 +51,9 @@ public class ScoresDialog {
             }
             stage = new Stage();
 
-            ScoresDialogController vbox = new ScoresDialogController();
+            Parent p = FXMLLoader.load(getClass().getResource("/fxml1/About.fxml"));
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ScoresDialog.fxml"));
-            loader.setRoot(vbox);
-
-            loader.load();
-
-            ((ScoresDialogController)loader.getController()).setDao( recenteredDAO );  // controller != root
-            ((ScoresDialogController)loader.getController()).setSettingsDAO( settingsDAO );
-            ((ScoresDialogController)loader.getController()).setMainViewRef( mainViewRef.get() );
-
-            if(logger.isDebugEnabled() ) {
-                logger.debug("[SHOW] root=" + loader.getRoot().hashCode());
-                logger.debug("[SHOW] controller=" + loader.getController().hashCode());
-            }
-
-            Scene scene = new Scene(vbox);
+            Scene scene = new Scene(p);
 
             scene.setOnKeyPressed(evt -> {
 
@@ -77,7 +62,11 @@ public class ScoresDialog {
                         if( logger.isDebugEnabled() ) {
                             logger.debug("[OPEN HELP]");
                         }
-                        mainViewRef.get().openHelpDialog();
+                        if( mainViewRef != null ) {
+                            if( mainViewRef.get() != null ) {
+                                mainViewRef.get().openHelpDialog();
+                            }
+                        }
                     } catch (IOException exc) {
                         String msg = "error showing help dialog";
                         logger.error(msg);
@@ -88,7 +77,7 @@ public class ScoresDialog {
             });
 
             scene.getStylesheets().add("/styles.css");
-            stage.setTitle("Pre-1995 and Recentered Scores");
+            stage.setTitle("About");
             stage.setScene(scene);
         }
 
@@ -114,14 +103,7 @@ public class ScoresDialog {
         }
     }
 
-    public void setRecenteredDAO(RecenteredDAO recenteredDAO) {
-       this.recenteredDAO = recenteredDAO;
-    }
-
-    public void setSettingsDAO(SettingsDAO settingsDAO) { this.settingsDAO = settingsDAO; }
-
     public void setMainViewRef(MainViewController mainView) {
-        mainViewRef = new WeakReference<MainViewController>(mainView);
+        mainViewRef = new WeakReference<>(mainView);
     }
-
 }

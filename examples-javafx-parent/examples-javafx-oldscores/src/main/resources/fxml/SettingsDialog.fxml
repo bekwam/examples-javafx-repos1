@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@../styles.css" type="VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.oldscores.SettingsDialogController">
+   <children>
+      <HBox spacing="4.0">
+         <children>
+            <RadioButton fx:id="rbRoundUp" mnemonicParsing="false" selected="true" text="Round scores up">
+               <toggleGroup>
+                  <ToggleGroup fx:id="tgRoundScores" />
+               </toggleGroup>
+            </RadioButton>
+            <RadioButton fx:id="rbRoundDown" mnemonicParsing="false" text="Round scores down" toggleGroup="$tgRoundScores" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </VBox.margin>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox alignment="TOP_RIGHT">
+         <children>
+            <Button mnemonicParsing="false" onAction="#save" text="Save" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#close" text="Close" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</fx:root>

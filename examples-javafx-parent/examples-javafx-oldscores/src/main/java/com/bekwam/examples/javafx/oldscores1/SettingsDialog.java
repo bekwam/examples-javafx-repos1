@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bekwam.examples.javafx.oldscores;
+package com.bekwam.examples.javafx.oldscores1;
 
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -27,16 +27,15 @@ import java.io.IOException;
 import java.lang.ref.WeakReference;
 
 /**
- * Dialog for Scores screen
+ * Dialog for Settings screen
  *
  * @author carl_000
  */
-public class ScoresDialog {
+public class SettingsDialog {
 
-    private Logger logger = LoggerFactory.getLogger(ScoresDialog.class);
+    private final Logger logger = LoggerFactory.getLogger(ScoresDialog.class);
 
     private Stage stage;
-    private RecenteredDAO recenteredDAO;
     private SettingsDAO settingsDAO;
     private WeakReference<MainViewController> mainViewRef;
 
@@ -52,21 +51,14 @@ public class ScoresDialog {
             }
             stage = new Stage();
 
-            ScoresDialogController vbox = new ScoresDialogController();
+            SettingsDialogController vbox = new SettingsDialogController();
 
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml/ScoresDialog.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml1/SettingsDialog.fxml"));
             loader.setRoot(vbox);
 
             loader.load();
 
-            ((ScoresDialogController)loader.getController()).setDao( recenteredDAO );  // controller != root
-            ((ScoresDialogController)loader.getController()).setSettingsDAO( settingsDAO );
-            ((ScoresDialogController)loader.getController()).setMainViewRef( mainViewRef.get() );
-
-            if(logger.isDebugEnabled() ) {
-                logger.debug("[SHOW] root=" + loader.getRoot().hashCode());
-                logger.debug("[SHOW] controller=" + loader.getController().hashCode());
-            }
+            ((SettingsDialogController)loader.getController()).setSettingsDAO(settingsDAO);  // controller != root
 
             Scene scene = new Scene(vbox);
 
@@ -77,7 +69,11 @@ public class ScoresDialog {
                         if( logger.isDebugEnabled() ) {
                             logger.debug("[OPEN HELP]");
                         }
-                        mainViewRef.get().openHelpDialog();
+                        if( mainViewRef != null ) {
+                            if( mainViewRef.get() != null ) {
+                                mainViewRef.get().openHelpDialog();
+                            }
+                        }
                     } catch (IOException exc) {
                         String msg = "error showing help dialog";
                         logger.error(msg);
@@ -88,7 +84,7 @@ public class ScoresDialog {
             });
 
             scene.getStylesheets().add("/styles.css");
-            stage.setTitle("Pre-1995 and Recentered Scores");
+            stage.setTitle("Settings");
             stage.setScene(scene);
         }
 
@@ -96,6 +92,16 @@ public class ScoresDialog {
             if( logger.isDebugEnabled() ) {
                 logger.debug("[SHOW] stage is not showing");
             }
+
+            try {
+                settingsDAO.load();
+            } catch(IOException exc) {
+                String msg = "Error loading settings from '" + settingsDAO.getAbsolutePath() + "'";
+                logger.error( msg, exc );
+                Alert alert = new Alert(Alert.AlertType.ERROR, msg);
+                alert.showAndWait();
+            }
+
             stage.show();
         }
     }
@@ -114,14 +120,12 @@ public class ScoresDialog {
         }
     }
 
-    public void setRecenteredDAO(RecenteredDAO recenteredDAO) {
-       this.recenteredDAO = recenteredDAO;
+    public void setSettingsDAO(SettingsDAO settingsDAO) {
+        this.settingsDAO = settingsDAO;
     }
 
-    public void setSettingsDAO(SettingsDAO settingsDAO) { this.settingsDAO = settingsDAO; }
-
     public void setMainViewRef(MainViewController mainView) {
-        mainViewRef = new WeakReference<MainViewController>(mainView);
+        mainViewRef = new WeakReference<>(mainView);
     }
 
 }
