@@ -36,8 +36,6 @@ public class SettingsDAOImpl implements SettingsDAO {
 
     private Settings settings = new Settings();
 
-    private final static String SETTINGS_FILE_NAME = ".oldscores";
-
     @Override
     public boolean getRoundUp() {
         return settings.getRoundUp();
@@ -85,7 +83,7 @@ public class SettingsDAOImpl implements SettingsDAO {
 
     @Override
     public String getAbsolutePath() {
-        File f = new File( System.getProperty("user.home"), SETTINGS_FILE_NAME );
+        File f = new File( System.getProperty("user.home"), Constants.SETTINGS_FILE_NAME );
         return f.getAbsolutePath();
     }
 }

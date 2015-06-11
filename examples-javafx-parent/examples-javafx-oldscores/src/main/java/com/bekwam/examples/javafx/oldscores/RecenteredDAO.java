@@ -30,9 +30,6 @@ public class RecenteredDAO {
 
     private Logger logger = LoggerFactory.getLogger(RecenteredDAO.class);
 
-    private final static String MATH_RECENTERED_JSON_FILE = "/data/mathRecentered.json";
-    private final static String VERBAL_RECENTERED_JSON_FILE = "/data/verbalRecentered.json";
-
     private boolean initialized = false;
 
     private Scores verbalScores;
@@ -44,7 +41,7 @@ public class RecenteredDAO {
         Gson gson = new Gson();
 
         try {
-            InputStream is = this.getClass().getResourceAsStream(MATH_RECENTERED_JSON_FILE);
+            InputStream is = this.getClass().getResourceAsStream(Constants.MATH_RECENTERED_JSON_FILE);
             br = new BufferedReader(new InputStreamReader(is));
             String json = "";
             String line;
@@ -65,7 +62,7 @@ public class RecenteredDAO {
         }
 
         try {
-            InputStream is = this.getClass().getResourceAsStream(VERBAL_RECENTERED_JSON_FILE);
+            InputStream is = this.getClass().getResourceAsStream(Constants.VERBAL_RECENTERED_JSON_FILE);
             br = new BufferedReader(new InputStreamReader(is));
             String json = "";
             String line;
@@ -74,13 +71,11 @@ public class RecenteredDAO {
             }
             verbalScores = gson.fromJson( json, Scores.class );
         } finally {
-            if( br != null ) {
-                try {
-                    br.close();
-                } catch(IOException exc) {
-                    if( logger.isWarnEnabled() ) {
-                        logger.warn("[INIT] cannot close buffered reader for verbal json file", exc);
-                    }
+            try {
+                br.close();
+            } catch(IOException exc) {
+                if( logger.isWarnEnabled() ) {
+                    logger.warn("[INIT] cannot close buffered reader for verbal json file", exc);
                 }
             }
         }
