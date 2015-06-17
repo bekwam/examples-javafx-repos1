@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bekwam.examples.javafx.oldscores1;
+package com.bekwam.examples.javafx.oldscores2;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;

@@ -13,44 +13,25 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bekwam.examples.javafx.oldscores1;
+package com.bekwam.examples.javafx.oldscores2;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.VBox;
-import javafx.scene.web.WebView;
 import javafx.stage.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * Controller for Help screen
+ * Controller for About screen
  *
  * @author carl_000
  */
-public class HelpDialogController extends VBox {
+public class AboutDialogController extends VBox {
 
-    private final Logger logger = LoggerFactory.getLogger(HelpDialogController.class);
-
-    @FXML
-    WebView wv;
-
-    @FXML
-    public void initialize() {
-        if( logger.isDebugEnabled() ) {
-            logger.debug("[INIT]");
-        }
-
-        String url = getClass().getResource("/help/help.html").toString();
-
-        if( logger.isDebugEnabled() ) {
-            logger.debug("[INIT] getting help from url={}", url);
-        }
-
-        wv.getEngine().load( url );
-    }
+    private Logger logger = LoggerFactory.getLogger(AboutDialogController.class);
 
     @FXML
     public void close(ActionEvent evt) {

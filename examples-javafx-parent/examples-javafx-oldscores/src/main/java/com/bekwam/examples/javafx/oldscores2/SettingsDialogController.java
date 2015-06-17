@@ -13,43 +13,57 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bekwam.examples.javafx.oldscores1;
+package com.bekwam.examples.javafx.oldscores2;
 
+import com.bekwam.examples.javafx.oldscores2.data.SettingsDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.RadioButton;
 import javafx.scene.layout.VBox;
-import javafx.scene.web.WebView;
 import javafx.stage.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.IOException;
+
 /**
- * Controller for Help screen
+ * Controller for Settings screen
  *
  * @author carl_000
  */
-public class HelpDialogController extends VBox {
+public class SettingsDialogController extends VBox {
 
-    private final Logger logger = LoggerFactory.getLogger(HelpDialogController.class);
+    private final Logger logger = LoggerFactory.getLogger(SettingsDialogController.class);
+
+    private SettingsDAO settingsDAO;
 
     @FXML
-    WebView wv;
+    RadioButton rbRoundUp;
 
     @FXML
-    public void initialize() {
-        if( logger.isDebugEnabled() ) {
-            logger.debug("[INIT]");
+    public void save(ActionEvent evt)  {
+
+        boolean roundUp = rbRoundUp.isSelected();
+
+        settingsDAO.setRoundUp( roundUp );
+
+        try {
+            settingsDAO.save();
+        } catch(IOException exc) {
+
+            String msg = "Error saving settings to '" + settingsDAO.getAbsolutePath() + "'";
+
+            logger.error( msg, exc );
+
+           Alert alert = new Alert(Alert.AlertType.ERROR, msg);
+            alert.showAndWait();
+
         }
 
-        String url = getClass().getResource("/help/help.html").toString();
-
-        if( logger.isDebugEnabled() ) {
-            logger.debug("[INIT] getting help from url={}", url);
-        }
-
-        wv.getEngine().load( url );
+        close(evt);
     }
 
     @FXML
@@ -66,5 +80,9 @@ public class HelpDialogController extends VBox {
                 w.hide();
             }
         }
+    }
+
+    public void setSettingsDAO(SettingsDAO settingsDAO) {
+        this.settingsDAO = settingsDAO;
     }
 }

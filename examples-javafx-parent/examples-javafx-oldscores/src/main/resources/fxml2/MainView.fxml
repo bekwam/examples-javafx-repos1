@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.input.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.oldscores2.MainViewController">
+   <children>
+      <MenuBar>
+        <menus>
+          <Menu text="_File">
+            <items>
+                  <MenuItem fx:id="miSettings" onAction="#openMenuItem" text="_Settings" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem onAction="#exit" text="E_xit" />
+            </items>
+          </Menu>
+          <Menu text="_Calc">
+            <items>
+              <MenuItem fx:id="miScores" onAction="#openMenuItem" text="_Scores" />
+            </items>
+          </Menu>
+            <Menu text="_Help">
+              <items>
+                <MenuItem fx:id="miAbout" onAction="#openMenuItem" text="_About" />
+                  <MenuItem fx:id="miHelp" onAction="#openMenuItem" text="_Help Contents" />
+              </items>
+            </Menu>
+        </menus>
+      </MenuBar>
+   </children>
+</VBox>
