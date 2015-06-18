@@ -37,13 +37,22 @@ public class GuiceBaseView extends BaseView {
     private final Logger logger = LoggerFactory.getLogger(GuiceBaseView.class);
 
     @Inject
-    BuilderFactory builderFactory;
+    protected BuilderFactory builderFactory;
 
     @Inject
-    GuiceControllerFactory guiceControllerFactory;
+    protected GuiceControllerFactory guiceControllerFactory;
 
     protected Scene scene;
 
+    /**
+     * Initializes the object using metadata extracted from the @Viewable annotation
+     *
+     * Requires injection of a BuilderFactory and GuiceControllerFactory; otherwise NPE will be thrown
+     *
+     * Calls postInit() at end
+     *
+     * @throws Exception
+     */
     @Override
     protected void init() throws Exception {
 
@@ -75,6 +84,4 @@ public class GuiceBaseView extends BaseView {
 
         postInit();
     }
-
-
 }

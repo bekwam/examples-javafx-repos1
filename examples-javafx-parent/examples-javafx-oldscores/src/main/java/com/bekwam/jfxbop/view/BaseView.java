@@ -16,7 +16,6 @@
 package com.bekwam.jfxbop.view;
 
 import com.google.common.base.Preconditions;
-import javafx.scene.Scene;
 import javafx.stage.Stage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,14 +34,21 @@ public class BaseView {
     protected String stylesheet = "";
     protected String title = "";
 
+    /**
+     * Shows the Stage on which this View is based
+     * <p>
+     * Will call init() if the object has not been initialized
+     *
+     * @throws Exception
+     */
     public void show() throws Exception {
 
-        if( stage == null ) {
+        if (stage == null) {
             init();
         }
 
-        if( !stage.isShowing() ) {
-            if( logger.isDebugEnabled() ) {
+        if (!stage.isShowing()) {
+            if (logger.isDebugEnabled()) {
                 logger.debug("[SHOW] stage is not showing");
             }
             stage.show();
@@ -50,6 +56,11 @@ public class BaseView {
     }
 
 
+    /**
+     * Hides the Stage if it's not showing
+     *
+     * @throws Exception
+     */
     public void hide() throws Exception {
 
         if (logger.isDebugEnabled()) {
@@ -64,16 +75,91 @@ public class BaseView {
         }
     }
 
-    protected void init() throws Exception {}
+    /**
+     * Initializes the object
+     *
+     * @throws Exception
+     */
+    protected void init() throws Exception {
+    }
 
-    protected void postInit() throws Exception {}
+    /**
+     * Method to be called after the init() operations are completed
+     *
+     * @throws Exception
+     */
+    protected void postInit() throws Exception {
+    }
 
+    /**
+     * Sets the object based on the class' @Viewable annotation
+     * <p>
+     * If the annotation isn't present, this operation doesn't do anything
+     */
     protected void readAnnotation() {
         Viewable viewable = this.getClass().getAnnotation(Viewable.class);
-        if( viewable != null ) {
+        if (viewable != null) {
             fxml = Preconditions.checkNotNull(viewable.fxml());  // fast fail
             stylesheet = viewable.stylesheet();
             title = viewable.title();
         }
     }
+
+    /**
+     * Gets the FXML file used in the construction of the View's contents
+     *
+     * @return
+     */
+    public String getFxml() {
+        return fxml;
+    }
+
+    /**
+     * Sets the FXML file used in the construction of the View's contents
+     *
+     * fxml parameter cannot be null
+     *
+     * @return
+     */
+    public void setFxml(String fxml) {
+        Preconditions.checkNotNull( fxml );
+        this.fxml = fxml;
+    }
+
+    /**
+     * Gets the stylesheet to be applied to the View
+     *
+     * @return
+     */
+    public String getStylesheet() {
+        return stylesheet;
+    }
+
+    /**
+     * Sets the stylesheet to be applied to the View
+     *
+     * @return
+     */
+    public void setStylesheet(String stylesheet) {
+        this.stylesheet = stylesheet;
+    }
+
+    /**
+     * Gets the title of the View
+     *
+     * @return
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Sets the title of the View
+     *
+     * @return
+     */
+    public void setTitle(String title) {
+        this.title = title;
+    }
 }
+

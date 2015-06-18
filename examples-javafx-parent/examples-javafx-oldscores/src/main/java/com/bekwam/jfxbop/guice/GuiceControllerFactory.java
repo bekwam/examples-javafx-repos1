@@ -29,8 +29,14 @@ import javax.inject.Inject;
 public class GuiceControllerFactory implements Callback<Class<?>, Object> {
 
     @Inject
-    Injector injector;
+    protected Injector injector;
 
+    /**
+     * Uses Google Guice to provide instances to the JavaFX factory
+     *
+     * @param param
+     * @return
+     */
     @Override
     public Object call(Class<?> param) {
         Preconditions.checkNotNull(injector);
