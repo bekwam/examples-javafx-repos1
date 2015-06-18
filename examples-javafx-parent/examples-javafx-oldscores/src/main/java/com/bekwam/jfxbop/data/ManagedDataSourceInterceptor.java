@@ -59,6 +59,9 @@ public class ManagedDataSourceInterceptor implements MethodInterceptor {
         if (thisObj instanceof ManagedDataSource) {
 
             ManagedDataSource ds = (ManagedDataSource) thisObj;
+            if( logger.isDebugEnabled() ) {
+                logger.debug("[INVOKE] disabling interceptor while going through ds api");
+            }
             disabled.set(true);
             try {
                 if (!ds.isInitialized()) {
@@ -79,6 +82,9 @@ public class ManagedDataSourceInterceptor implements MethodInterceptor {
                     ds.refresh();
                 }
             } finally {
+                if( logger.isDebugEnabled() ) {
+                    logger.debug("[INVOKE] re-enabling interceptor");
+                }
                 disabled.set(false);
             }
         }

@@ -1,0 +1,141 @@
+/*
+ * Copyright 2015 Bekwam, Inc
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+package com.bekwam.examples.javafx.oldscores3.data;
+
+import com.bekwam.examples.javafx.oldscores2.Settings;
+import com.bekwam.jfxbop.data.AbstractManagedDataSource;
+import org.apache.commons.lang3.BooleanUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Properties;
+
+/**
+ * Implementation of DAO for .oldscores files
+ *
+ * @author carl_000
+ */
+public class SettingsDAOImpl extends AbstractManagedDataSource implements SettingsDAO {
+
+    private final Logger logger = LoggerFactory.getLogger(SettingsDAOImpl.class);
+
+    private boolean initialized = false;
+    private boolean refreshFlag = false;  // false=does not need refresh
+    private final Settings settings = new Settings();
+
+    @Inject @Named("settingsFileName")
+    String settingsFileName;
+
+    @Override
+    public boolean getRoundUp() {
+        return settings.getRoundUp();
+    }
+
+    @Override
+    public void setRoundUp(boolean roundUp) {
+        settings.setRoundUp(roundUp);
+    }
+
+    @Override
+    public void save() throws IOException {
+
+        if( logger.isDebugEnabled() ) {
+            logger.debug("[SAVE] saving " + getAbsolutePath() );
+        }
+        FileWriter fw = new FileWriter( getAbsolutePath() );
+        Properties props = new Properties();
+        props.setProperty("oldscores.roundUp", String.valueOf(settings.getRoundUp()));
+        props.store(fw, "");
+        fw.close();
+
+        markForRefresh();
+    }
+
+    @Override
+    public void load() throws IOException {
+
+        File f = new File(getAbsolutePath());
+        if( f.exists() ) {
+
+            if( logger.isDebugEnabled() ) {
+                logger.debug("[LOAD] " + f.getName() + " exists; loading");
+            }
+            FileReader fr = new FileReader(f);
+            Properties props = new Properties();
+            props.load(fr);
+            settings.setRoundUp(BooleanUtils.toBoolean(props.getProperty("oldscores.roundUp")));
+            fr.close();
+        } else {
+            if( logger.isDebugEnabled() ) {
+                logger.debug("[LOAD " + f.getName() + " does not exist");
+            }
+        }
+
+    }
+
+    @Override
+    public String getAbsolutePath() {
+        File f = new File( System.getProperty("user.home"), settingsFileName );
+        return f.getAbsolutePath();
+    }
+
+    @Override
+    public void init() throws Exception {
+        if( logger.isDebugEnabled() ) {
+            logger.debug("[INIT]");
+        }
+        load();
+        initialized = true;
+    }
+
+    @Override
+    public boolean isInitialized() {
+        return initialized;
+    }
+
+    @Override
+    public void refresh() throws Exception {
+        if( logger.isDebugEnabled() ) {
+            logger.debug("[REFRESH]");
+        }
+        if( refreshFlag ) {  // if needs a refresh
+            load();
+            refreshFlag = false;  // does not need refresh now
+        }
+    }
+
+    @Override
+    public boolean needsRefresh() {
+        if( logger.isDebugEnabled() ) {
+            logger.debug("[NEEDS REFRESH]");
+        }
+        return refreshFlag;
+    }
+
+    @Override
+    public void markForRefresh() {
+        if( logger.isDebugEnabled() ) {
+            logger.debug("[MARK FOR REFRESH]");
+        }
+        refreshFlag = true;  // true = needs refresh
+    }
+}

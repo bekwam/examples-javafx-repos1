@@ -24,9 +24,9 @@ import java.util.function.Consumer;
  */
 abstract public class AbstractManagedDataSource implements ManagedDataSource {
 
-    private Consumer<Object> initCB;
-    private Consumer<Object> refreshCB;
-    private Consumer<Object> destroyCB;
+    protected Consumer<Object> initCB;
+    protected Consumer<Object> refreshCB;
+    protected Consumer<Object> destroyCB;
 
     @Override
     public void setOnPostInit(Consumer<Object> initCB) { this.initCB = initCB; }

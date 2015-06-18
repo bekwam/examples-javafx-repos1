@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox style="-fx-background-color: -fx-color;" stylesheets="@../styles.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.oldscores3.ScoresViewController">
+   <children>
+      <StackPane>
+         <children>
+            <GridPane hgap="4.0" styleClass="group" vgap="4.0">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" />
+                <ColumnConstraints hgrow="SOMETIMES" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+              </columnConstraints>
+              <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <TextField fx:id="txtVerbalScore1995" onAction="#updateVerbalRecentered" onMouseEntered="#resetErrMsgs" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Serif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label text="Verbal" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Serif Regular" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#updateVerbalRecentered" text="Calc Recentered" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <Label fx:id="errMsgVerbal1995" styleClass="error" text="Score must be a number between 200 and 800" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                  <Label fx:id="errMsgVerbalRecentered" styleClass="error" text="Score must be a number between 200 and 800" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                  <Label text="Math" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Serif Regular" size="14.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="txtMathScore1995" onAction="#updateMathRecentered" onMouseEntered="#resetErrMsgs" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Serif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button mnemonicParsing="false" onAction="#updateMathRecentered" text="Calc Recentered" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </VBox.margin>
+               <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </padding>
+            </GridPane>
+            <Label fx:id="lblVerbalScoresGroup" styleClass="group-header" text="Pre 1995 Scores" translateX="10.0" translateY="-10.0" StackPane.alignment="TOP_LEFT" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </VBox.margin>
+      </StackPane>
+      <StackPane>
+         <children>
+            <GridPane hgap="4.0" styleClass="group" vgap="4.0">
+               <children>
+                  <TextField fx:id="txtVerbalScoreRecentered" onAction="#updateVerbal1995" onMouseEntered="#resetErrMsgs" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Serif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Button mnemonicParsing="false" onAction="#updateVerbal1995" text="Calc 1995" GridPane.columnIndex="2" GridPane.rowIndex="1" />
+                  <TextField fx:id="txtMathScoreRecentered" onAction="#updateMath1995" onMouseEntered="#resetErrMsgs" GridPane.columnIndex="1" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Serif Regular" size="14.0" />
+                     </font>
+                  </TextField>
+                  <Label text="Math" GridPane.rowIndex="3">
+                     <font>
+                        <Font name="Serif Regular" size="14.0" />
+                     </font>
+                  </Label>
+                  <Button mnemonicParsing="false" onAction="#updateMath1995" text="Calc 1995" GridPane.columnIndex="2" GridPane.rowIndex="3" />
+                  <Label fx:id="errMsgMath1995" styleClass="error" text="Score must be a number between 200 and 800" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="2" />
+                  <Label fx:id="errMsgMathRecentered" styleClass="error" text="Score must be a number between 200 and 800" visible="false" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="4" />
+                  <Label text="Verbal" GridPane.rowIndex="1">
+                     <font>
+                        <Font name="Serif Regular" size="14.0" />
+                     </font>
+                  </Label>
+               </children>
+               <columnConstraints>
+                  <ColumnConstraints hgrow="SOMETIMES" />
+                  <ColumnConstraints hgrow="SOMETIMES" />
+                  <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" />
+               </columnConstraints>
+               <padding>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </padding>
+               <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="20.0" vgrow="SOMETIMES" />
+               </rowConstraints>
+               <VBox.margin>
+                  <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+               </VBox.margin>
+            </GridPane>
+            <Label styleClass="group-header" text="Recentered Scores" translateX="10.0" translateY="-10.0" StackPane.alignment="TOP_LEFT" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </VBox.margin>
+      </StackPane>
+      <Separator prefWidth="200.0" />
+      <HBox alignment="CENTER_RIGHT">
+         <children>
+            <Button cancelButton="true" onAction="#close" text="_Close" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</VBox>

@@ -13,25 +13,27 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bekwam.javafx.guice;
+package com.bekwam.examples.javafx.oldscores3;
 
-import com.google.inject.Injector;
-import javafx.util.Callback;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.inject.Inject;
 
 /**
- * Integration between JavaFX factory for controllers and Google Guice
  *
- * @author carl_000
  */
-public class GuiceControllerFactory implements Callback<Class<?>, Object> {
+public class NavigationDelegate {
+
+    private final Logger logger = LoggerFactory.getLogger(NavigationDelegate.class);
 
     @Inject
-    Injector injector;
+    HelpView helpView;
 
-    @Override
-    public Object call(Class<?> param) {
-        return injector.getInstance(param);
+    public void openHelpDialog() throws Exception {
+        if (logger.isDebugEnabled()) {
+            logger.debug("[OPEN HELP]");
+        }
+        helpView.show();
     }
 }

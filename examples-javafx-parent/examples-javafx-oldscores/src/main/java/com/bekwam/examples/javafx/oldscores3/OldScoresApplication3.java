@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bekwam.examples.javafx.oldscores2;
+package com.bekwam.examples.javafx.oldscores3;
 
 import com.bekwam.jfxbop.guice.GuiceControllerFactory;
 import com.google.inject.Guice;
@@ -29,18 +29,16 @@ import javafx.util.BuilderFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
-
 /**
  * An application that compares standardized test scores before 1995 with today's scores
  *
- * A second refactor to conslidate the DAO interactions
+ * Third refactor to introduce complete Guice wiring of FX objects and a centralized navigation controller
  *
  * @author carl_000
  */
-public class OldScoresApplication2 extends Application {
+public class OldScoresApplication3 extends Application {
 
-    private final Logger logger = LoggerFactory.getLogger(OldScoresApplication2.class);
+    private final Logger logger = LoggerFactory.getLogger(OldScoresApplication3.class);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -51,7 +49,7 @@ public class OldScoresApplication2 extends Application {
 
         Injector injector = Guice.createInjector(new OldScoresModule());
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml2/MainView.fxml"),
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/fxml3/MainView.fxml"),
                                            null,
                                            injector.getInstance(BuilderFactory.class),
                                            injector.getInstance(GuiceControllerFactory.class));
@@ -68,8 +66,9 @@ public class OldScoresApplication2 extends Application {
                     if( logger.isDebugEnabled() ) {
                         logger.debug("[OPEN HELP]");
                     }
-                    mv.openHelpDialog();
-                } catch (IOException exc) {
+                    injector.getInstance(NavigationDelegate.class).openHelpDialog();
+
+                } catch (Exception exc) {
                     String msg = "error showing help dialog";
                     logger.error(msg);
                     Alert alert = new Alert(Alert.AlertType.ERROR, msg);

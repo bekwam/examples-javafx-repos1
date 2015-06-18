@@ -25,11 +25,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
 /**
- * Unit test for ScoresDialogController
+ * Unit test for ScoresViewController
  *
  * @author carl_000
  */
-public class ScoresDialogControllerTest {
+public class ScoresViewControllerTest {
 
     private Mockery context = new Mockery();
 

@@ -15,7 +15,7 @@
  */
 package com.bekwam.examples.javafx.oldscores1;
 
-import com.bekwam.javafx.guice.GuiceControllerFactory;
+import com.bekwam.jfxbop.guice.GuiceControllerFactory;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
 import javafx.application.Application;
