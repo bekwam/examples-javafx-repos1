@@ -25,7 +25,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author carl_000
  */
-public class BaseView {
+public class BaseView implements View{
 
     private final Logger logger = LoggerFactory.getLogger(BaseView.class);
 
@@ -41,6 +41,7 @@ public class BaseView {
      *
      * @throws Exception
      */
+    @Override
     public void show() throws Exception {
 
         if (stage == null) {
@@ -61,6 +62,7 @@ public class BaseView {
      *
      * @throws Exception
      */
+    @Override
     public void hide() throws Exception {
 
         if (logger.isDebugEnabled()) {
