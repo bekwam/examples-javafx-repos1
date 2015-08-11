@@ -56,15 +56,15 @@ public class PairStringConverter extends StringConverter<Pair<String, String>> {
 			throw new IllegalArgumentException("non-null converter received null pair key; set the nullable flag?");
 		}
 
-		if( string == null ) {
+		if( string == Constants.PAIR_NULL.getValue() ) {
 			return Constants.PAIR_NULL;
 		}
 		
-		if( string.equalsIgnoreCase("N") ) {
+		if( string.equalsIgnoreCase(Constants.PAIR_NO.getValue()) ) {
 			return Constants.PAIR_NO;
 		}
 		
-		if( string.equalsIgnoreCase("Y") ) {
+		if( string.equalsIgnoreCase(Constants.PAIR_YES.getValue()) ) {
 			return Constants.PAIR_YES;
 		}
 		
