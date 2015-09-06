@@ -10,6 +10,10 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>examples-javafx-menubutton</artifactId>
+    <packaging>pom</packaging>
+    <modules>
+        <module>../examples-threading-sync</module>
+    </modules>
 
     <dependencies>
 
