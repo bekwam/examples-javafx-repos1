@@ -27,7 +27,6 @@ import javafx.scene.layout.VBox;
 public class GetDataDialog {
 
     private VBox vbox;
-
     private String data = "";
 
     public void init() {
