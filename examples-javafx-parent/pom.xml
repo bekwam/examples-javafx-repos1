@@ -12,6 +12,7 @@
         <module>examples-javafx-oldscores</module>
         <module>examples-javafx-menubutton</module>
         <module>examples-javafx-waitnotify</module>
+        <module>examples-javafx-binding1</module>
     </modules>
 
     <dependencies>
