@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" type="VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.binding1.AddressController2">
+   <children>
+      <VBox>
+         <children>
+            <HBox alignment="CENTER">
+               <children>
+                  <ToggleButton fx:id="tbCanada" mnemonicParsing="false" prefWidth="200.0" selected="true" text="Canada">
+                     <toggleGroup>
+                        <ToggleGroup fx:id="tgCountry" />
+                     </toggleGroup>
+                  </ToggleButton>
+                  <ToggleButton fx:id="tbUS" mnemonicParsing="false" prefWidth="200.0" text="United States" toggleGroup="$tgCountry" />
+               </children>
+               <VBox.margin>
+                  <Insets bottom="10.0" top="10.0" />
+               </VBox.margin>
+            </HBox>
+            <StackPane fx:id="sp" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </VBox.margin>
+      </VBox>
+      <Separator prefWidth="200.0" />
+      <HBox alignment="TOP_RIGHT">
+         <children>
+            <Button defaultButton="true" mnemonicParsing="false" onAction="#save" text="Save" />
+            <Button cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Cancel" />
+         </children>
+         <VBox.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </VBox.margin>
+      </HBox>
+   </children>
+</fx:root>

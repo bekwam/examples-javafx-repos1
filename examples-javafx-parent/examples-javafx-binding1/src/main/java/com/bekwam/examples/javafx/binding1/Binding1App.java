@@ -27,6 +27,9 @@ import javafx.stage.Stage;
 /**
  * Main entry point for binding1 demo
  * 
+ * This demonstrates a conditional Canada / US address form that is implemented
+ * with JavaFX binding.  Two ToggleButtons drive the set of available fields.
+ * 
  * @author carlwalker
  *
  */

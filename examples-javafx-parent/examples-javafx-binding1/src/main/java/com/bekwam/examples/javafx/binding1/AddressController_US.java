@@ -22,32 +22,26 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.control.ToggleButton;
+import javafx.scene.layout.VBox;
 import javafx.util.Pair;
 
+
 /**
- * JavaFX Controller used in the single-FXML Canada / US address form demo
+ * The US address form for the second demo
  * 
- * @see Binding1App
+ * @see Binding2App
+ * @see AddressController2
  * 
  * @author carlwalker
  *
  */
-public class AddressController {
+public class AddressController_US extends VBox {
 
-	private Logger logger = LoggerFactory.getLogger( AddressController.class );
-
-	@FXML
-	ToggleButton tbCanada;
-	
-	@FXML
-	ToggleButton tbUS;
+	private Logger logger = LoggerFactory.getLogger( AddressController_US.class );
 	
 	@FXML
 	TextField tfAddress1;
@@ -58,12 +52,6 @@ public class AddressController {
 	@FXML
 	TextField tfCity;
 
-	@FXML
-	Label lblCAProvince;
-	
-	@FXML
-	ChoiceBox<Pair<String, String>> cbCAProvince;
-	
 	@FXML
 	Label lblUSState;
 	
@@ -79,94 +67,21 @@ public class AddressController {
 	@FXML
 	Label lblPostalCodeSep;
 	
-	private final List<Pair<String, String>> provinces = new ArrayList<>();
 	private final List<Pair<String, String>> states = new ArrayList<>();
 
-	public AddressController() {
-		initCanadianProvinces();
+	public AddressController_US() {
 		initUSStates();
 	}
 	
 	@FXML
 	public void initialize() {		
+
+		if( logger.isDebugEnabled() ) {
+			logger.debug("[INIT] this={}", this.hashCode());
+		}
 		
-		//
-		// Controls specific to Canada
-		//
-		lblCAProvince.visibleProperty().bind( tbCanada.selectedProperty() );
-		
-		cbCAProvince.visibleProperty().bind( tbCanada.selectedProperty() );
-		cbCAProvince.setItems( FXCollections.observableArrayList(provinces) );
-		cbCAProvince.setConverter(new PairStringConverter(provinces));
-		
-		//
-		// Controls specific to US
-		//
-		lblUSState.visibleProperty().bind( tbUS.selectedProperty() );
-		
-		cbUSState.visibleProperty().bind( tbUS.selectedProperty() );
 		cbUSState.setItems( FXCollections.observableArrayList(states) );
 		cbUSState.setConverter(new PairStringConverter(states));
-		
-		tfPostalCodeExt.visibleProperty().bind(tbUS.selectedProperty());
-		
-		lblPostalCodeSep.visibleProperty().bind(tbUS.selectedProperty());		
-	}
-	
-	@FXML
-	public void clearForm() {
-		tfAddress1.setText("");
-		tfAddress2.setText("");
-		tfCity.setText("");
-		cbCAProvince.getSelectionModel().clearSelection();
-		cbUSState.getSelectionModel().clearSelection();
-		tfPostalCode.setText("");
-		tfPostalCodeExt.setText("");;
-	}
-	
-	@FXML
-	public void save(ActionEvent evt) {
-		
-		if( logger.isDebugEnabled() ) {
-			logger.debug("[SAVE]");
-		}
-		
-		if( logger.isDebugEnabled() ) {
-			logger.debug("[SAVE] address1={}", tfAddress1.getText());
-			logger.debug("[SAVE] address2={}", tfAddress2.getText());
-			logger.debug("[SAVE] city={}", tfCity.getText());
-			logger.debug("[SAVE] ca province={}", cbCAProvince.getSelectionModel().getSelectedItem());
-			logger.debug("[SAVE] us state={}", cbUSState.getSelectionModel().getSelectedItem());
-			logger.debug("[SAVE] postalCode={}", tfPostalCode.getText());
-			logger.debug("[SAVE] postalCodeExt={}", tfPostalCodeExt.getText());
-		}
-		((Button)evt.getSource()).getScene().getWindow().hide();
-	}
-	
-	@FXML
-	public void cancel(ActionEvent evt) {
-		
-		if( logger.isDebugEnabled() ) {
-			logger.debug("[CANCEL]");
-		}
-		
-		((Button)evt.getSource()).getScene().getWindow().hide();
-	}
-
-	private void initCanadianProvinces() {
-		provinces.add(new Pair<String, String>("AB", "Alberta"));
-		provinces.add(new Pair<String, String>("BC", "British Columbia"));
-		provinces.add(new Pair<String, String>("MB", "Manitoba"));
-		provinces.add(new Pair<String, String>("NB", "New Brunswick"));
-		provinces.add(new Pair<String, String>("NL", "Newfoundland and Labrador"));
-		provinces.add(new Pair<String, String>("NS", "Nova Scotia"));
-		provinces.add(new Pair<String, String>("NT", "Northwest Territories"));
-		provinces.add(new Pair<String, String>("NU", "Nunavut"));
-		provinces.add(new Pair<String, String>("ON", "Ontario"));
-		provinces.add(new Pair<String, String>("PE", "Prince Edward Island"));
-		provinces.add(new Pair<String, String>("QC", "Quebec"));
-		provinces.add(new Pair<String, String>("SK", "Saskatchewan"));
-		provinces.add(new Pair<String, String>("YT", "Yukon"));
 	}
 	
 	private void initUSStates() {
@@ -221,5 +136,15 @@ public class AddressController {
 		states.add(new Pair<String, String>("WV", "West Virginia"));
 		states.add(new Pair<String, String>("WI", "Wisconsin" ));
 		states.add(new Pair<String, String>("WY", "Wyoming"));
+	}
+	
+	@FXML
+	public void clearForm() {
+		tfAddress1.setText("");
+		tfAddress2.setText("");
+		tfCity.setText("");
+		cbUSState.getSelectionModel().clearSelection();
+		tfPostalCode.setText("");
+		tfPostalCodeExt.setText("");;
 	}
 }
