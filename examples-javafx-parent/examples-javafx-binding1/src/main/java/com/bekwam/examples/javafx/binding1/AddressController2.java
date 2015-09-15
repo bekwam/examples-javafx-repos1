@@ -57,25 +57,33 @@ public class AddressController2 extends VBox {
 		
 		usForm.visibleProperty().bind( tbUS.selectedProperty() );
 		
-		tbUS.setOnAction( (evt) -> usController.clearForm() );
-		
 		caForm.visibleProperty().bind( tbCanada.selectedProperty() );	
-		
-		tbCanada.setOnAction( (evt) -> caController.clearForm() );
 		
 		//
 		// Makes controls behave like RadioButtons (always one selected)
 		//
 		tbUS.addEventFilter(EventType.ROOT, (evt) -> {
+			
+			if( evt.getEventType() == ActionEvent.ACTION ) {
+				usController.clearForm();
+				caController.clearForm();
+			}
+
 			if( tbUS.isSelected() ) {
-				evt.consume();
+				evt.consume();				
 			}
 		});
 		
 		tbCanada.addEventFilter(EventType.ROOT, (evt) -> {
+
+			if( evt.getEventType() == ActionEvent.ACTION ) {
+				usController.clearForm();
+				caController.clearForm();
+			}
+			
 			if( tbCanada.isSelected() ) {
 				evt.consume();
-			}
+			} 
 		});
 	}
 	
