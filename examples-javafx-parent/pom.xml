@@ -13,6 +13,7 @@
         <module>examples-javafx-menubutton</module>
         <module>examples-javafx-waitnotify</module>
         <module>examples-javafx-binding1</module>
+        <module>examples-javafx-ios</module>
     </modules>
 
     <dependencies>

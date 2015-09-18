@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane fx:id="sp" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="568.0" prefWidth="320.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.overlay1.Overlay1Controller">
+   <children>
+      <VBox fx:id="mainContent" alignment="CENTER" styleClass="main">
+         <children>
+            <Label text="Main Content Here" />
+         </children>
+      </VBox>
+      <VBox fx:id="overlayContent" alignment="BOTTOM_CENTER" styleClass="overlay">
+         <children>
+            <VBox alignment="CENTER" VBox.vgrow="ALWAYS">
+               <children>
+                  <Label text="Overlay Content" />
+               </children>
+            </VBox>
+            <VBox fx:id="overlayBottom" alignment="CENTER" prefHeight="40.0" styleClass="overlayBottom">
+               <children>
+                  <Line fx:id="overlayBottomLineFlat" endX="10.0" startX="-10.0" strokeLineCap="ROUND" strokeWidth="8.0" />
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </children>
+</StackPane>
