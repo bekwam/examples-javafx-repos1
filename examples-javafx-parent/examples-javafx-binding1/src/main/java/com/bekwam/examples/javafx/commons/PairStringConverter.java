@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package com.bekwam.examples.javafx.binding1;
+package com.bekwam.examples.javafx.commons;
 
 import java.util.List;
 import java.util.Optional;
