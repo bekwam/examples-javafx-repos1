@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.accesscontrol.MainViewController">
+   <children>
+      <HBox alignment="CENTER_RIGHT">
+         <children>
+            <Label text="User:">
+               <HBox.margin>
+                  <Insets right="10.0" />
+               </HBox.margin>
+            </Label>
+            <ChoiceBox fx:id="cbUser" prefWidth="150.0" />
+         </children>
+      </HBox>
+      <MenuBar>
+        <menus>
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+                  <MenuItem fx:id="miA" mnemonicParsing="false" text="Command A" />
+                  <MenuItem fx:id="miB" mnemonicParsing="false" text="Command B" />
+                  <MenuItem fx:id="miC" mnemonicParsing="false" text="Command C" />
+                  <SeparatorMenuItem mnemonicParsing="false" />
+              <MenuItem mnemonicParsing="false" onAction="#close" text="Close" />
+            </items>
+          </Menu>
+        </menus>
+      </MenuBar>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button fx:id="tbA" mnemonicParsing="false" text="A" />
+            <Button fx:id="tbB" mnemonicParsing="false" text="B" />
+            <Button fx:id="tbC" mnemonicParsing="false" text="C" />
+        </items>
+      </ToolBar>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <Button fx:id="btnA" mnemonicParsing="false" text="Command A" />
+            <Button fx:id="btnB" mnemonicParsing="false" text="Command B" />
+            <Button fx:id="btnC" mnemonicParsing="false" text="Command C" />
+         </children>
+      </VBox>
+   </children>
+</VBox>
