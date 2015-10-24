@@ -158,16 +158,6 @@ public class Overlay1Controller {
         });
     }
 
-    private void createOverlayBottomLineUp() {
-        overlayBottomLineUp = new Polyline();
-        overlayBottomLineUp.getPoints().addAll(
-                new Double[]{
-                        -10.0d, 4.0d,
-                        0.0d, 0.0d,
-                        10.0d, 4.0d}
-        );
-    }
-
     private void createTopHighlightBorder() {
         Stop[] stops = new Stop[] {
                 new Stop(0, Color.WHITE),
@@ -184,6 +174,16 @@ public class Overlay1Controller {
                         new BorderWidths( 8.0d ),
                         null
                 ));
+    }
+
+    private void createOverlayBottomLineUp() {
+        overlayBottomLineUp = new Polyline();
+        overlayBottomLineUp.getPoints().addAll(
+                new Double[]{
+                        -10.0d, 4.0d,
+                        0.0d, 0.0d,
+                        10.0d, 4.0d}
+        );
     }
 
     private void createTopEmptyBorder() {
