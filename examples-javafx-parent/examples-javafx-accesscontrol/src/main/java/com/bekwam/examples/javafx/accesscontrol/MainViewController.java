@@ -117,14 +117,13 @@ public class MainViewController {
 
         cbUser.getItems().addAll(s1, s2, s3);
         cbUser.getSelectionModel().select(s1);
-        cbUser.setOnAction((evt) -> {
-            applySecurity(cbUser.getScene());
-        });
-
+        cbUser.getSelectionModel().selectedItemProperty().addListener(
+        		(ov, oldV,newV) -> applySecurity(cbUser.getScene())
+        		);
     }
 
     /**
-     * Must be called after @FXML initialize() b/c Scene won't be avaialable
+     * Must be called after @FXML initialize() b/c Scene won't be available
      */
     public void init() {
         applySecurity(cbUser.getScene());
