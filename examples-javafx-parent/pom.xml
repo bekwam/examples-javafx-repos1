@@ -17,6 +17,7 @@
         <module>examples-javafx-userdata</module>
         <module>examples-javafx-accesscontrol</module>
         <module>examples-javafx-macmenu</module>
+        <module>examples-javafx-listviewhelper</module>
     </modules>
 
     <dependencies>
