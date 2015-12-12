@@ -1,0 +1,24 @@
+.wrapper {
+	-fx-background-color: #989898	
+}
+
+.container {
+    -fx-stroke: gray;
+    -fx-stroke-width: 5;
+//    -fx-background-color: #8fbc8f;
+
+//	-fx-background-color: #004489;
+	-fx-background-color: #DBDBCE;
+}
+
+.piece-background {
+    -fx-stroke: gray;
+    -fx-stroke-width: 2;
+    /*-fx-fill: linear-gradient(to bottom, #eeeeee 0%,#cccccc 100%) */
+    /*-fx-fill: linear-gradient(to bottom, #f5f6f6 0%, #dbdce2 21%, #b8bac6 49%, #dddfe3 80%, #f5f6f6 100%) */
+    -fx-fill: linear-gradient(to bottom, #f2f6f8 0%,#d8e1e7 50%,#b5c6d0 51%,#e0eff9 100%);
+}
+
+Button {
+	-fx-background-color: linear-gradient(to bottom, #eeeeee 0%,#eeeeee 100%);
+}

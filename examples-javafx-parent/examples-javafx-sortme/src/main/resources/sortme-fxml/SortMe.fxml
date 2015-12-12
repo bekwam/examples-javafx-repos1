@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.canvas.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox styleClass="wrapper" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.sortme.SortMeController">
+   <children>
+      <VBox alignment="CENTER">
+         <children>
+            <Pane fx:id="background" prefHeight="600.0" prefWidth="400.0" styleClass="container">
+               <children>
+                  <Pane fx:id="spriteContainer">
+                     <children>
+                        <Group fx:id="normal">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="piece-background" width="100.0" />
+                              <Text layoutX="44.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A" />
+                           </children>
+                        </Group>
+                        <Group fx:id="highlight" layoutX="100.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="piece-background" width="100.0">
+                                 <effect>
+                                    <InnerShadow color="#004489" />
+                                 </effect>
+                              </Rectangle>
+                              <Text layoutX="44.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A" />
+                           </children>
+                        </Group>
+                        <Group fx:id="drag" layoutX="200.0">
+                           <children>
+                              <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" opacity="0.4" stroke="BLACK" strokeType="INSIDE" styleClass="piece-background" width="100.0">
+                                 <effect>
+                                    <InnerShadow color="#004489" />
+                                 </effect>
+                              </Rectangle>
+                              <Text fill="#020000" layoutX="44.0" layoutY="30.0" opacity="0.4" strokeType="OUTSIDE" strokeWidth="0.0" text="A" />
+                           </children>
+                        </Group>
+                     </children>
+                  </Pane>
+               </children>
+            </Pane>
+            <HBox alignment="CENTER">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#check" text="Check" />
+               </children>
+               <VBox.margin>
+                  <Insets left="20.0" right="20.0" top="20.0" />
+               </VBox.margin>
+            </HBox>
+         </children>
+         <VBox.margin>
+            <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+         </VBox.margin>
+      </VBox>
+   </children>
+</VBox>

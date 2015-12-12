@@ -18,6 +18,7 @@
         <module>examples-javafx-accesscontrol</module>
         <module>examples-javafx-macmenu</module>
         <module>examples-javafx-listviewhelper</module>
+        <module>examples-javafx-sortme</module>
     </modules>
 
     <dependencies>
