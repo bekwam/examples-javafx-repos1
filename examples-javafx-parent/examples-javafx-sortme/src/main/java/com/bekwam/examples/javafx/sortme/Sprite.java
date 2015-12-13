@@ -134,7 +134,7 @@ public class Sprite implements Serializable {
 		container.relocate(x, y);
 	}
 	
-	private EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+/*	private EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
 		@Override
 		public void handle(MouseEvent evt) {
 			if( evt.getEventType() == MouseEvent.MOUSE_ENTERED && !evt.isPrimaryButtonDown()) {
@@ -200,9 +200,9 @@ public class Sprite implements Serializable {
 				}
 			}
 		}		
-	};
+	};*/
 	
-	/*
+	
 	private EventHandler<MouseEvent> mouseHandler = (evt) -> {
 		
 		if( evt.getEventType() == MouseEvent.MOUSE_ENTERED && !evt.isPrimaryButtonDown()) {
@@ -266,7 +266,7 @@ public class Sprite implements Serializable {
 			}
 		}
 	};
-	*/
+	
 	
 	public void flagAsError() {
 		
