@@ -134,6 +134,75 @@ public class Sprite implements Serializable {
 		container.relocate(x, y);
 	}
 	
+	private EventHandler<MouseEvent> mouseHandler = new EventHandler<MouseEvent>() {
+		@Override
+		public void handle(MouseEvent evt) {
+			if( evt.getEventType() == MouseEvent.MOUSE_ENTERED && !evt.isPrimaryButtonDown()) {
+				
+				if( !Sprite.this.highlight.isVisible() ) {
+					Sprite.this.normal.setVisible(false);
+					Sprite.this.highlight.setVisible(true);
+					Sprite.this.drag.setVisible(false);
+					Sprite.this.error.setVisible(false);
+				}
+				
+			} else if( evt.getEventType() == MouseEvent.MOUSE_EXITED && !evt.isPrimaryButtonDown() ) {
+
+				if( !Sprite.this.normal.isVisible() ) {
+					Sprite.this.normal.setVisible(true);
+					Sprite.this.highlight.setVisible(false);
+					Sprite.this.drag.setVisible(false);
+					Sprite.this.error.setVisible(false);
+				}
+				
+			} else if( evt.getEventType() == MouseEvent.MOUSE_DRAGGED ) {
+				
+				if( !Sprite.this.drag.isVisible() ) {
+
+					Sprite.this.normal.setVisible( false );
+					Sprite.this.highlight.setVisible(false);
+					Sprite.this.drag.setVisible(true);
+					Sprite.this.error.setVisible(false);
+				}
+
+				if( mouseInSpriteX == -1.0d || mouseInSpriteY == -1.0d ) {
+					
+					Point2D spriteInParent = Sprite.this.container.localToParent( 
+							Sprite.this.container.getLayoutBounds().getMinX(), 
+							Sprite.this.container.getLayoutBounds().getMinY() 
+							);
+					
+					double spriteMinX = spriteInParent.getX();					
+					double spriteMinY = spriteInParent.getY();
+					
+					mouseInSpriteX = evt.getSceneX() - spriteMinX;
+					mouseInSpriteY = evt.getSceneY() - spriteMinY;
+					
+				} else {
+				
+					Sprite.this.container.relocate(
+							evt.getSceneX() - mouseInSpriteX, 
+							evt.getSceneY() - mouseInSpriteY
+							);
+				}
+				
+			} else if( evt.getEventType() == MouseEvent.MOUSE_RELEASED ) {
+				
+				if( mouseInSpriteX != -1.0d && mouseInSpriteY != -1.0d ) {
+					
+					mouseInSpriteX = -1.0d;
+					mouseInSpriteY = -1.0d;
+					
+					Sprite.this.normal.setVisible(true);
+					Sprite.this.highlight.setVisible(false);
+					Sprite.this.drag.setVisible(false);
+					Sprite.this.error.setVisible(false);
+				}
+			}
+		}		
+	};
+	
+	/*
 	private EventHandler<MouseEvent> mouseHandler = (evt) -> {
 		
 		if( evt.getEventType() == MouseEvent.MOUSE_ENTERED && !evt.isPrimaryButtonDown()) {
@@ -197,6 +266,7 @@ public class Sprite implements Serializable {
 			}
 		}
 	};
+	*/
 	
 	public void flagAsError() {
 		
