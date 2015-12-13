@@ -16,7 +16,7 @@
          <children>
             <Pane fx:id="background" prefHeight="600.0" prefWidth="400.0" styleClass="container">
                <children>
-                  <Pane fx:id="spriteContainer">
+                  <Pane fx:id="container">
                      <children>
                         <Group fx:id="normal">
                            <children>

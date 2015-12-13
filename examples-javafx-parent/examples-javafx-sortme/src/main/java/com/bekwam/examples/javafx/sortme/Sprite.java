@@ -37,7 +37,7 @@ public class Sprite implements Serializable {
 	
 	private static final long serialVersionUID = 1351843411944357891L;
 	
-	final Pane spriteContainer;
+	final Pane container;
 	final Group normal;
 	final Group highlight;
 	final Group drag;
@@ -51,15 +51,15 @@ public class Sprite implements Serializable {
 	private double mouseInSpriteX = -1.0d;
 	private double mouseInSpriteY = -1.0d;
 	
-	public Sprite(Pane spriteContainer, Group normal, Group highlight, Group drag, Group error, String text) {
+	public Sprite(Pane container, Group normal, Group highlight, Group drag, Group error, String text) {
 		
-		this.spriteContainer = spriteContainer;			
+		this.container = container;			
 		this.normal = normal;
 		this.highlight = highlight;
 		this.drag = drag;		
 		this.error = error;
 		
-		this.spriteContainer.addEventHandler(MouseEvent.ANY, mouseHandler);
+		this.container.addEventHandler(MouseEvent.ANY, mouseHandler);
 		
 		this.normal.setVisible(true);
 		this.normal.setLayoutX( 0.0d );
@@ -115,23 +115,23 @@ public class Sprite implements Serializable {
 	
 	public Sprite create(String text) { // TODO: add in string param
 		
-		Pane copySpriteContainer = new Pane();
-		copySpriteContainer.getStyleClass().addAll( spriteContainer.getStyleClass() );
+		Pane copyContainer = new Pane();
+		copyContainer.getStyleClass().addAll( container.getStyleClass() );
 		
 		Group copyNormal = copyGroup( normal );
 		Group copyHighlight = copyGroup( highlight );
 		Group copyDrag = copyGroup( drag );
 		Group copyError = copyGroup( error );
 		
-		copySpriteContainer.getChildren().addAll( copyNormal, copyHighlight, copyDrag, copyError );
+		copyContainer.getChildren().addAll( copyNormal, copyHighlight, copyDrag, copyError );
 		
-		Sprite copySprite = new Sprite( copySpriteContainer, copyNormal, copyHighlight, copyDrag, copyError, text );
+		Sprite copySprite = new Sprite( copyContainer, copyNormal, copyHighlight, copyDrag, copyError, text );
 		
 		return copySprite;
 	}
 	
 	public void relocate(double x, double y) {		
-		spriteContainer.relocate(x, y);
+		container.relocate(x, y);
 	}
 	
 	private EventHandler<MouseEvent> mouseHandler = (evt) -> {
@@ -166,7 +166,7 @@ public class Sprite implements Serializable {
 
 			if( mouseInSpriteX == -1.0d || mouseInSpriteY == -1.0d ) {
 				
-				Point2D spriteInParent = this.spriteContainer.localToParent( this.spriteContainer.getLayoutBounds().getMinX(), this.spriteContainer.getLayoutBounds().getMinY() );
+				Point2D spriteInParent = this.container.localToParent( this.container.getLayoutBounds().getMinX(), this.container.getLayoutBounds().getMinY() );
 				
 				double spriteMinX = spriteInParent.getX();					
 				double spriteMinY = spriteInParent.getY();
@@ -176,7 +176,7 @@ public class Sprite implements Serializable {
 				
 			} else {
 			
-				this.spriteContainer.relocate(
+				this.container.relocate(
 						evt.getSceneX() - mouseInSpriteX, 
 						evt.getSceneY() - mouseInSpriteY
 						);

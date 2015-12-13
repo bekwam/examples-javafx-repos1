@@ -41,7 +41,7 @@ public class SortMeController {
 	Pane background;
 	
 	@FXML
-	Pane spriteContainer;
+	Pane container;
 	
 	@FXML
 	Group normal;
@@ -57,29 +57,22 @@ public class SortMeController {
 	
 	private SpriteXComparator spriteYComparator = new SpriteXComparator();	
 	private final List<Sprite> sprites = new ArrayList<>();	
-	private final List<String> expectedResults = Arrays.asList( new String[]{"A", "B", "C", "D"} );
+	private final List<String> expectedResults = Arrays.asList( new String[]{"A", "B", "C", "D", "E", "F", "G"} );
 	
 	@FXML
 	public void initialize() {
 	
-		Sprite templateSprite = new Sprite( spriteContainer, normal, highlight, drag, error, "A" );
+		Sprite templateSprite = new Sprite( container, normal, highlight, drag, error, "A" );
 		
-		background.getChildren().remove(spriteContainer);
+		background.getChildren().remove(container);
 		
-		Sprite sprite = templateSprite.create("A");
-
-		Sprite sprite2 = templateSprite.create("B");
-		
-		Sprite sprite3 = templateSprite.create("C");
-		
-		Sprite sprite4 = templateSprite.create("D");
-
-		background.getChildren().addAll( sprite.spriteContainer, sprite2.spriteContainer, sprite3.spriteContainer, sprite4.spriteContainer );
-
-		sprites.add( sprite );
-		sprites.add( sprite2 );
-		sprites.add( sprite3 );
-		sprites.add( sprite4 );
+		expectedResults
+			.stream()
+			.forEach((s) -> {
+				Sprite sp = templateSprite.create( s );
+				background.getChildren().add( sp.container );
+				sprites.add( sp );
+			});
 		
 		shuffle();
 	}
@@ -139,7 +132,7 @@ public class SortMeController {
 	class SpriteXComparator implements Comparator<Sprite> {
 		@Override
 		public int compare(Sprite o1, Sprite o2) {
-			return Double.compare( o1.spriteContainer.getLayoutY(), o2.spriteContainer.getLayoutY() );
+			return Double.compare( o1.container.getLayoutY(), o2.container.getLayoutY() );
 		}		
 	}
 	
@@ -154,8 +147,8 @@ public class SortMeController {
 		Random random = new Random();
 		
 		for( Sprite sp : sprites ) {			
-			double maxx = bounds.getMaxX() - sp.spriteContainer.getWidth();
-			double maxy = bounds.getMaxY() - sp.spriteContainer.getHeight();
+			double maxx = bounds.getMaxX() - sp.container.getWidth();
+			double maxy = bounds.getMaxY() - sp.container.getHeight();
 			double x = random.nextDouble() * (maxx - minx);
 			double y = random.nextDouble() * (maxy - miny);
 			sp.relocate(x, y);
