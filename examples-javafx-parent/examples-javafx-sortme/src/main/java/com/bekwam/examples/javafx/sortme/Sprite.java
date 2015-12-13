@@ -59,6 +59,70 @@ public class Sprite implements Serializable {
 		this.drag = drag;		
 		this.error = error;
 		
+		EventHandler<MouseEvent> mouseHandler = (evt) -> {
+			
+			if( evt.getEventType() == MouseEvent.MOUSE_ENTERED && !evt.isPrimaryButtonDown()) {
+				
+				if( !this.highlight.isVisible() ) {
+					this.normal.setVisible(false);
+					this.highlight.setVisible(true);
+					this.drag.setVisible(false);
+					this.error.setVisible(false);
+				}
+				
+			} else if( evt.getEventType() == MouseEvent.MOUSE_EXITED && !evt.isPrimaryButtonDown() ) {
+
+				if( !this.normal.isVisible() ) {
+					this.normal.setVisible(true);
+					this.highlight.setVisible(false);
+					this.drag.setVisible(false);
+					this.error.setVisible(false);
+				}
+				
+			} else if( evt.getEventType() == MouseEvent.MOUSE_DRAGGED ) {
+				
+				if( !this.drag.isVisible() ) {
+
+					this.normal.setVisible( false );
+					this.highlight.setVisible(false);
+					this.drag.setVisible(true);
+					this.error.setVisible(false);
+				}
+
+				if( mouseInSpriteX == -1.0d || mouseInSpriteY == -1.0d ) {
+					
+					Point2D spriteInParent = this.container.localToParent( this.container.getLayoutBounds().getMinX(), this.container.getLayoutBounds().getMinY() );
+					
+					double spriteMinX = spriteInParent.getX();					
+					double spriteMinY = spriteInParent.getY();
+					
+					mouseInSpriteX = evt.getSceneX() - spriteMinX;
+					mouseInSpriteY = evt.getSceneY() - spriteMinY;
+					
+				} else {
+				
+					this.container.relocate(
+							evt.getSceneX() - mouseInSpriteX, 
+							evt.getSceneY() - mouseInSpriteY
+							);
+				}
+				
+			} else if( evt.getEventType() == MouseEvent.MOUSE_RELEASED ) {
+				
+				if( mouseInSpriteX != -1.0d && mouseInSpriteY != -1.0d ) {
+					
+					mouseInSpriteX = -1.0d;
+					mouseInSpriteY = -1.0d;
+					
+					this.normal.setVisible(true);
+					this.highlight.setVisible(false);
+					this.drag.setVisible(false);
+					this.error.setVisible(false);
+
+				}
+			}
+		};
+		
 		this.container.addEventHandler(MouseEvent.ANY, mouseHandler);
 		
 		this.normal.setVisible(true);
@@ -203,7 +267,7 @@ public class Sprite implements Serializable {
 	};*/
 	
 	
-	private EventHandler<MouseEvent> mouseHandler = (evt) -> {
+/*	private EventHandler<MouseEvent> mouseHandler = (evt) -> {
 		
 		if( evt.getEventType() == MouseEvent.MOUSE_ENTERED && !evt.isPrimaryButtonDown()) {
 			
@@ -265,7 +329,7 @@ public class Sprite implements Serializable {
 
 			}
 		}
-	};
+	}; */
 	
 	
 	public void flagAsError() {
