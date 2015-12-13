@@ -15,8 +15,20 @@
  */
 package com.bekwam.examples.javafx.sortme;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
+import java.util.Random;
+
+import javafx.application.Platform;
 import javafx.fxml.FXML;
+import javafx.geometry.Bounds;
 import javafx.scene.Group;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
 import javafx.scene.layout.Pane;
 
 /**
@@ -41,79 +53,108 @@ public class SortMeController {
 	Group drag;
 
 	@FXML
+	Group error;
+	
+	private SpriteXComparator spriteYComparator = new SpriteXComparator();	
+	private final List<Sprite> sprites = new ArrayList<>();	
+	private final List<String> expectedResults = Arrays.asList( new String[]{"A", "B", "C", "D"} );
+	
+	@FXML
 	public void initialize() {
 	
-		Sprite sprite = new Sprite( spriteContainer, normal, highlight, drag );
+		Sprite sprite = new Sprite( spriteContainer, normal, highlight, drag, error, "A" );
 		
-		Sprite sprite2 = sprite.create();
-		sprite2.relocate( 0, 50.0d );
+		Sprite sprite2 = sprite.create("B");
 		
-		Sprite sprite3 = sprite.create();
-		sprite3.relocate( 0, 100.0d );
+		Sprite sprite3 = sprite.create("C");
 		
-		Sprite sprite4 = sprite.create();
-		sprite4.relocate( 0, 150.0d );
+		Sprite sprite4 = sprite.create("D");
 
 		background.getChildren().addAll( sprite2.spriteContainer, sprite3.spriteContainer, sprite4.spriteContainer );
+
+		sprites.add( sprite );
+		sprites.add( sprite2 );
+		sprites.add( sprite3 );
+		sprites.add( sprite4 );
+		
+		shuffle();
 	}
 	
 	@FXML
-	public void check() { System.out.println("on action");}
-	
-	
-/*    private DropShadow pieceTextHighlight = new DropShadow(3.0d, Color.web("#004489"));
-    private InnerShadow pieceBackgroundHighlight = new InnerShadow(10.0d, Color.web("#004489"));
-    
-	@FXML
-	public void initialize() {		
+	public void check() { 
+
+		Collections.sort( sprites, spriteYComparator );
 		
-		sourcePane.getChildren().remove( templatePiece );
+		boolean allMatch = true;
 		
-		int startY = 10;
-		int currentY = 0;
-		for( int i=0; i<5; i++ ) {
-			Group p = createPiece(String.valueOf(i));
-			p.relocate(10, startY + currentY );
-			currentY += 60;
-			sourcePane.getChildren().add( p );
-		}	
+		System.out.println("checking...");
+		
+		List<Sprite> spritesToFlag = new ArrayList<>();
+		for( int i=0; i<sprites.size(); i++ ) {
+			System.out.println( "actual=" + sprites.get(i).getText() + ", expected=" + expectedResults.get(i) );
+			if( !sprites.get(i).getText().equals( expectedResults.get(i)) ) {
+				spritesToFlag.add( sprites.get(i) );
+				allMatch = false;
+			}
+		}
+		
+		if( allMatch ) {
+			
+			ButtonType btnExit = new ButtonType("No, Exit");
+			
+			Alert alert = new Alert(
+					AlertType.CONFIRMATION, 
+					"Correct! Good Job!\nPlay Again?",
+					ButtonType.YES,
+					btnExit);
+			
+			alert.showAndWait().ifPresent(response -> {
+			     if (response == ButtonType.YES) {
+			         shuffle();
+			     } else {
+			    	 Platform.exit();
+			     }
+			 });	
+		
+		} else {
+			
+			Alert alert = new Alert(
+					AlertType.WARNING, 
+					"Incorrect. Try again?"
+					);
+			
+			alert.showAndWait();
+			
+			spritesToFlag
+			.stream()
+			.forEachOrdered((sp)->sp.flagAsError());	
+		}
+	}
+
+	class SpriteXComparator implements Comparator<Sprite> {
+		@Override
+		public int compare(Sprite o1, Sprite o2) {
+			return Double.compare( o1.spriteContainer.getLayoutY(), o2.spriteContainer.getLayoutY() );
+		}		
 	}
 	
-	private Group createPiece(String text_s) {
+	@FXML
+	public void shuffle() {
 		
-		Group g = new Group();
-		g.getStyleClass().addAll( templatePiece.getStyleClass() );
+		Bounds bounds = background.getLayoutBounds();
 		
-		Rectangle templateBackground = (Rectangle)templatePiece.getChildren().get(0);
+		double minx = bounds.getMinX();
+		double miny = bounds.getMinY();
+		double maxx = bounds.getMaxX() - spriteContainer.getWidth();
+		double maxy = bounds.getMaxY() - spriteContainer.getHeight();
+
+		Random random = new Random();
 		
-		Rectangle background = new Rectangle();
-		background.setWidth( templateBackground.getWidth() );
-		background.setHeight( templateBackground.getHeight() );
-		background.getStyleClass().addAll( templateBackground.getStyleClass() );
-		background.setEffect( templateBackground.getEffect() );
+		for( Sprite sp : sprites ) {			
+			double x = random.nextDouble() * (maxx - minx);
+			double y = random.nextDouble() * (maxy - miny);
+			sp.relocate(x, y);
+		}
 		
-		Text templateText = (Text)templatePiece.getChildren().get(1);
-		
-		Text text = new Text();
-		text.getStyleClass().addAll( templateText.getStyleClass() );
-		text.setLayoutX( templateText.getLayoutX() );
-		text.setLayoutY( templateText.getLayoutY() );
-		text.setText( text_s );
-		
-		g.getChildren().addAll( background, text );
-		
-		g.setOnMouseEntered( (evt) -> {
-			text.setEffect(pieceTextHighlight);
-			background.setEffect(pieceBackgroundHighlight);
-		});
-		
-		g.setOnMouseExited( (evt) -> {
-			text.setEffect(null);	
-			background.setEffect(null);
-		});
-		
-		sourcePane.setOnMousePressed( (evt) -> System.out.println("mouse clicked") );
-		
-		return g;
-	}*/
+	}
 }

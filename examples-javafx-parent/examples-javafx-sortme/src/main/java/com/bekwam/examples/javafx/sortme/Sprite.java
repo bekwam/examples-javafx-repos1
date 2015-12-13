@@ -17,6 +17,9 @@ package com.bekwam.examples.javafx.sortme;
 
 import java.io.Serializable;
 
+import javafx.animation.FadeTransition;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.event.EventHandler;
 import javafx.geometry.Point2D;
 import javafx.scene.Group;
@@ -24,6 +27,7 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
+import javafx.util.Duration;
 
 /**
  * @author carl
@@ -37,6 +41,8 @@ public class Sprite implements Serializable {
 	final Group normal;
 	final Group highlight;
 	final Group drag;
+	final Group error;
+	final StringProperty textProperty;
 	
 	/**
 	 * Track the position of the mouse within a sprite when a drag is 
@@ -45,12 +51,13 @@ public class Sprite implements Serializable {
 	private double mouseInSpriteX = -1.0d;
 	private double mouseInSpriteY = -1.0d;
 	
-	public Sprite(Pane spriteContainer, Group normal, Group highlight, Group drag) {
+	public Sprite(Pane spriteContainer, Group normal, Group highlight, Group drag, Group error, String text) {
 		
 		this.spriteContainer = spriteContainer;			
 		this.normal = normal;
 		this.highlight = highlight;
 		this.drag = drag;		
+		this.error = error;
 		
 		this.spriteContainer.addEventHandler(MouseEvent.ANY, mouseHandler);
 		
@@ -62,6 +69,20 @@ public class Sprite implements Serializable {
 		
 		this.drag.setVisible(false);
 		this.drag.setLayoutX( 0.0d );
+		
+		this.error.setVisible(false);
+		this.error.setLayoutX( 0.0d );
+		
+		textProperty = new SimpleStringProperty( text );
+
+		((Text)this.normal.getChildren().get(1)).textProperty().bind( textProperty );
+		((Text)this.highlight.getChildren().get(1)).textProperty().bind( textProperty );
+		((Text)this.drag.getChildren().get(1)).textProperty().bind( textProperty );
+		((Text)this.error.getChildren().get(1)).textProperty().bind( textProperty );
+	}
+	
+	public String getText() {
+		return textProperty.get();
 	}
 	
 	private Group copyGroup(Group sourceGroup) {
@@ -76,6 +97,7 @@ public class Sprite implements Serializable {
 		copyBackground.setHeight( sourceBackground.getHeight() );
 		copyBackground.getStyleClass().addAll( sourceBackground.getStyleClass() );
 		copyBackground.setEffect( sourceBackground.getEffect() );
+		copyBackground.setOpacity( sourceBackground.getOpacity() );
 		
 		Text sourceText = (Text)sourceGroup.getChildren().get(1);
 		
@@ -83,14 +105,15 @@ public class Sprite implements Serializable {
 		copyText.getStyleClass().addAll( sourceText.getStyleClass() );
 		copyText.setLayoutX( sourceText.getLayoutX() );
 		copyText.setLayoutY( sourceText.getLayoutY() );
-		copyText.setText( "A" );  // TODO: replace with real value
+		copyText.setText( sourceText.getText() );
+		copyText.setOpacity( sourceBackground.getOpacity() );
 		
 		copyGroup.getChildren().addAll( copyBackground, copyText );
 		
 		return copyGroup;
 	}
 	
-	public Sprite create() { // TODO: add in string param
+	public Sprite create(String text) { // TODO: add in string param
 		
 		Pane copySpriteContainer = new Pane();
 		copySpriteContainer.getStyleClass().addAll( spriteContainer.getStyleClass() );
@@ -98,10 +121,11 @@ public class Sprite implements Serializable {
 		Group copyNormal = copyGroup( normal );
 		Group copyHighlight = copyGroup( highlight );
 		Group copyDrag = copyGroup( drag );
+		Group copyError = copyGroup( error );
 		
-		copySpriteContainer.getChildren().addAll( copyNormal, copyHighlight, copyDrag );
+		copySpriteContainer.getChildren().addAll( copyNormal, copyHighlight, copyDrag, copyError );
 		
-		Sprite copySprite = new Sprite( copySpriteContainer, copyNormal, copyHighlight, copyDrag );
+		Sprite copySprite = new Sprite( copySpriteContainer, copyNormal, copyHighlight, copyDrag, copyError, text );
 		
 		return copySprite;
 	}
@@ -118,6 +142,7 @@ public class Sprite implements Serializable {
 				this.normal.setVisible(false);
 				this.highlight.setVisible(true);
 				this.drag.setVisible(false);
+				this.error.setVisible(false);
 			}
 			
 		} else if( evt.getEventType() == MouseEvent.MOUSE_EXITED && !evt.isPrimaryButtonDown() ) {
@@ -126,14 +151,17 @@ public class Sprite implements Serializable {
 				this.normal.setVisible(true);
 				this.highlight.setVisible(false);
 				this.drag.setVisible(false);
+				this.error.setVisible(false);
 			}
 			
 		} else if( evt.getEventType() == MouseEvent.MOUSE_DRAGGED ) {
 			
 			if( !this.drag.isVisible() ) {
+
 				this.normal.setVisible( false );
 				this.highlight.setVisible(false);
 				this.drag.setVisible(true);
+				this.error.setVisible(false);
 			}
 
 			if( mouseInSpriteX == -1.0d || mouseInSpriteY == -1.0d ) {
@@ -164,8 +192,32 @@ public class Sprite implements Serializable {
 				this.normal.setVisible(true);
 				this.highlight.setVisible(false);
 				this.drag.setVisible(false);
+				this.error.setVisible(false);
 
 			}
 		}
 	};
+	
+	public void flagAsError() {
+		
+		this.normal.setVisible(true);  // hidden behind error
+		this.highlight.setVisible(false);
+		this.drag.setVisible(false);
+		this.error.setVisible(true);
+		
+		FadeTransition ft = new FadeTransition(Duration.seconds(4), this.error);
+	    ft.setFromValue(1.0);
+	    ft.setToValue(0.0);
+	    ft.setOnFinished( (evt) -> {
+	    	
+			this.normal.setVisible(true);  // show normal
+			this.highlight.setVisible(false);
+			this.drag.setVisible(false);
+			this.error.setVisible(false);
+
+	    	this.error.setOpacity( 1.0d );  // restore opacity
+	    	
+	    });
+	    ft.play();
+	}
 }

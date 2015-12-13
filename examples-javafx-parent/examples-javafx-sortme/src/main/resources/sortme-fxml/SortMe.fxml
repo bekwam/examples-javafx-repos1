@@ -10,7 +10,6 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
 <VBox styleClass="wrapper" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.sortme.SortMeController">
    <children>
       <VBox alignment="CENTER">
@@ -47,10 +46,17 @@
                         </Group>
                      </children>
                   </Pane>
+                  <Group fx:id="error" layoutX="300.0">
+                     <children>
+                        <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="50.0" stroke="BLACK" strokeType="INSIDE" styleClass="piece-background-error" width="100.0" />
+                        <Text fill="#020000" layoutX="44.0" layoutY="30.0" strokeType="OUTSIDE" strokeWidth="0.0" text="A" />
+                     </children>
+                  </Group>
                </children>
             </Pane>
-            <HBox alignment="CENTER">
+            <HBox alignment="CENTER" spacing="10.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#shuffle" text="Shuffle" />
                   <Button mnemonicParsing="false" onAction="#check" text="Check" />
                </children>
                <VBox.margin>

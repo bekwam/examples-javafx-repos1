@@ -19,6 +19,16 @@
     -fx-fill: linear-gradient(to bottom, #f2f6f8 0%,#d8e1e7 50%,#b5c6d0 51%,#e0eff9 100%);
 }
 
+.piece-background-error {
+    -fx-stroke: orangered;
+    -fx-stroke-width: 2;
+	-fx-fill: linear-gradient(to bottom, #f2f6f8 0%,#d8e1e7 50%,#b5c6d0 51%,#e0eff9 100%);	
+}
+
 Button {
-	-fx-background-color: linear-gradient(to bottom, #eeeeee 0%,#eeeeee 100%);
+	-fx-background-color: linear-gradient(to bottom, #cccccc 0%,#eeeeee 100%);
+}
+
+Button:pressed {
+	-fx-background-color: linear-gradient(to bottom, #bbcccc 0%,#ddeeee 100%);
 }

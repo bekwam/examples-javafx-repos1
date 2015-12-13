@@ -33,13 +33,18 @@ public class SortMeApp extends Application {
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 
-		Parent p = FXMLLoader.load( SortMeApp.class.getResource("/sortme-fxml/SortMe.fxml") );
+		FXMLLoader fxmlLoader = new FXMLLoader( SortMeApp.class.getResource("/sortme-fxml/SortMe.fxml") );
+		Parent p = fxmlLoader.load();
 		
 		Scene scene = new Scene(p);
 		scene.getStylesheets().add( "/sortme-css/sortme.css" );
 		
 		primaryStage.setScene( scene );
 		primaryStage.setTitle( "SortMeApp" );
+		primaryStage.setOnShown((evt)-> {
+			SortMeController controller = (SortMeController)fxmlLoader.getController();
+			controller.shuffle();
+		});
 		primaryStage.show();
 	}
 
