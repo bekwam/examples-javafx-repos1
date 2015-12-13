@@ -62,15 +62,19 @@ public class SortMeController {
 	@FXML
 	public void initialize() {
 	
-		Sprite sprite = new Sprite( spriteContainer, normal, highlight, drag, error, "A" );
+		Sprite templateSprite = new Sprite( spriteContainer, normal, highlight, drag, error, "A" );
 		
-		Sprite sprite2 = sprite.create("B");
+		background.getChildren().remove(spriteContainer);
 		
-		Sprite sprite3 = sprite.create("C");
-		
-		Sprite sprite4 = sprite.create("D");
+		Sprite sprite = templateSprite.create("A");
 
-		background.getChildren().addAll( sprite2.spriteContainer, sprite3.spriteContainer, sprite4.spriteContainer );
+		Sprite sprite2 = templateSprite.create("B");
+		
+		Sprite sprite3 = templateSprite.create("C");
+		
+		Sprite sprite4 = templateSprite.create("D");
+
+		background.getChildren().addAll( sprite.spriteContainer, sprite2.spriteContainer, sprite3.spriteContainer, sprite4.spriteContainer );
 
 		sprites.add( sprite );
 		sprites.add( sprite2 );
@@ -126,8 +130,9 @@ public class SortMeController {
 			alert.showAndWait();
 			
 			spritesToFlag
-			.stream()
-			.forEachOrdered((sp)->sp.flagAsError());	
+				.stream()
+				.forEach((sp)->sp.flagAsError());
+			
 		}
 	}
 
@@ -145,12 +150,12 @@ public class SortMeController {
 		
 		double minx = bounds.getMinX();
 		double miny = bounds.getMinY();
-		double maxx = bounds.getMaxX() - spriteContainer.getWidth();
-		double maxy = bounds.getMaxY() - spriteContainer.getHeight();
 
 		Random random = new Random();
 		
 		for( Sprite sp : sprites ) {			
+			double maxx = bounds.getMaxX() - sp.spriteContainer.getWidth();
+			double maxy = bounds.getMaxY() - sp.spriteContainer.getHeight();
 			double x = random.nextDouble() * (maxx - minx);
 			double y = random.nextDouble() * (maxy - miny);
 			sp.relocate(x, y);
