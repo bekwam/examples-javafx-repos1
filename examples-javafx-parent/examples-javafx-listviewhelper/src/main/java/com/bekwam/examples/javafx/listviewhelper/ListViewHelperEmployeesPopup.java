@@ -35,11 +35,9 @@ import javafx.util.Duration;
  */
 public class ListViewHelperEmployeesPopup extends Popup {
 
-	private WeakReference<TextField> tfTargetRef;
-	
 	public ListViewHelperEmployeesPopup(TextField tfTarget, Point2D position) throws Exception{
 		
-		tfTargetRef = new WeakReference<>(tfTarget);
+		final WeakReference<TextField> tfTargetRef = new WeakReference<>(tfTarget);
 		
 		FXMLLoader fxmlLoader = new FXMLLoader(ListViewHelperApp.class.getResource("/ListViewHelperEmployees.fxml"));
 		
