@@ -19,6 +19,7 @@
         <module>examples-javafx-macmenu</module>
         <module>examples-javafx-listviewhelper</module>
         <module>examples-javafx-sortme</module>
+        <module>examples-javafx-background</module>
     </modules>
 
     <dependencies>

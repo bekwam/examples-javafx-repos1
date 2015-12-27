@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+<StackPane maxHeight="800.0" maxWidth="1920.0" minHeight="768.0" minWidth="320.0" prefHeight="768.0" prefWidth="1024.0" xmlns="http://javafx.com/javafx/8.0.40" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.background.BackgroundController">
+   <children>
+      <Pane>
+         <children>
+            <ImageView fx:id="background1" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../background-images/background.svg.png" />
+               </image>
+            </ImageView>
+            <ImageView fx:id="background2" pickOnBounds="true" preserveRatio="true" x="2000.0">
+               <image>
+                  <Image url="@../background-images/background.svg.png" />
+               </image>
+            </ImageView>
+         </children>
+      </Pane>
+      <Button fx:id="btnControl" mnemonicParsing="false" onAction="#controlPressed" opacity="0.7" text="&gt;" StackPane.alignment="BOTTOM_CENTER">
+         <StackPane.margin>
+            <Insets bottom="40.0" />
+         </StackPane.margin>
+         <effect>
+            <DropShadow />
+         </effect>
+         <font>
+            <Font name="System Bold" size="18.0" />
+         </font>
+      </Button>
+   </children>
+</StackPane>
