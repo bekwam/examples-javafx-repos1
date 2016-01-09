@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.table.PersonsController">
+   <children>
+      <TableView fx:id="tblPersons" VBox.vgrow="ALWAYS">
+        <columns>
+          <TableColumn fx:id="tcFirstName" minWidth="100.0" prefWidth="100.0" text="First Name" />
+          <TableColumn fx:id="tcLastName" minWidth="100.0" prefWidth="100.0" text="Last Name" />
+            <TableColumn fx:id="tcEmail" minWidth="100.0" prefWidth="100.0" text="Email" />
+        </columns>
+         <columnResizePolicy>
+            <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+         </columnResizePolicy>
+      </TableView>
+      <Button mnemonicParsing="false" onAction="#addPerson" text="+" VBox.vgrow="NEVER" />
+      <HBox spacing="20.0" VBox.vgrow="NEVER">
+         <children>
+            <ProgressBar fx:id="pbStatus" prefWidth="200.0" progress="0.0" />
+            <Label fx:id="lblStatus" text="Label" />
+         </children>
+      </HBox>
+   </children>
+   <padding>
+      <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+   </padding>
+</VBox>
