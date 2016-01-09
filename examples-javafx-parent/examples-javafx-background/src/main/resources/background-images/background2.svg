@@ -15,7 +15,10 @@
    id="svg2"
    version="1.1"
    inkscape:version="0.91 r13725"
-   sodipodi:docname="background2.svg">
+   sodipodi:docname="background2.svg"
+   inkscape:export-filename="/home/carl/git/examples-javafx-repos1/examples-javafx-parent/examples-javafx-background/src/main/resources/background-images/background2.svg.png"
+   inkscape:export-xdpi="90"
+   inkscape:export-ydpi="90">
   <defs
      id="defs4" />
   <sodipodi:namedview
@@ -25,9 +28,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.7"
-     inkscape:cx="914.63066"
-     inkscape:cy="349.8624"
+     inkscape:zoom="0.6755"
+     inkscape:cx="1000"
+     inkscape:cy="389.8624"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
      showgrid="true"
@@ -49,7 +52,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -59,12 +62,14 @@
      id="layer1"
      transform="translate(0,-252.36219)">
     <rect
-       style="fill:#000080;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       style="fill:#00a8ff;fill-rule:evenodd;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1;fill-opacity:1"
        id="rect3338"
        width="2000"
        height="560"
        x="0"
-       y="252.36218" />
+       y="252.36218"
+       inkscape:export-xdpi="90"
+       inkscape:export-ydpi="90" />
     <rect
        style="fill:#008000"
        id="rect3340"
@@ -72,149 +77,34 @@
        height="240"
        x="0"
        y="812.36218" />
+    <path
+       style="fill:#552200;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 483.90075,812.29077 C 588.60314,623.10219 802.76639,648.60644 935.61604,805.21933"
+       id="path4181"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:#803300;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 654.28571,812.36219 C 1010.8304,518.06208 1238.8121,731.81628 1513.2142,812.00505"
+       id="path4177"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:#803300;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 1288.5714,812.50505 C 1529.4284,585.16766 1805.4959,824.25136 1860,812.36219"
+       id="path4183"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
+    <path
+       style="fill:#803300;fill-rule:evenodd;stroke:#000000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 120,812.36219 c 100,-60 525.65267,-210.21617 700,0"
+       id="path4175"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cc" />
   </g>
   <g
      inkscape:groupmode="layer"
      id="layer2"
-     inkscape:label="Clouds">
-    <g
-       id="g4170"
-       transform="translate(158.57143,-11.428572)">
-      <circle
-         r="40"
-         cy="160"
-         cx="100"
-         id="path4162"
-         style="fill:#ffffff;fill-opacity:1" />
-      <circle
-         r="40"
-         cy="140"
-         cx="140"
-         id="path4164"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="30"
-         rx="50"
-         cy="190"
-         cx="150"
-         id="path4166"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="30"
-         rx="40"
-         cy="170"
-         cx="180"
-         id="path4168"
-         style="fill:#ffffff;fill-opacity:1" />
-    </g>
-    <g
-       id="g4186"
-       transform="translate(187.14286,-32.857143)">
-      <ellipse
-         ry="40"
-         rx="60"
-         cy="200"
-         cx="540"
-         id="path4176"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="40"
-         rx="50"
-         cy="160"
-         cx="570"
-         id="path4178"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="40"
-         rx="50"
-         cy="200"
-         cx="610"
-         id="path4180"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="30"
-         rx="50"
-         cy="170"
-         cx="630"
-         id="path4182"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="30"
-         rx="40"
-         cy="170"
-         cx="540"
-         id="path4184"
-         style="fill:#ffffff;fill-opacity:1" />
-    </g>
-    <g
-       id="g4215"
-       transform="translate(300,-32.857143)">
-      <ellipse
-         ry="40"
-         rx="60"
-         cy="160"
-         cx="1320"
-         id="path4207"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="40"
-         rx="50"
-         cy="200"
-         cx="1350"
-         id="path4209"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="30"
-         rx="50"
-         cy="210"
-         cx="1290"
-         id="path4211"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="32.857143"
-         rx="40"
-         cy="172.85715"
-         cx="1380"
-         id="path4213"
-         style="fill:#ffffff;fill-opacity:1" />
-    </g>
-    <g
-       id="g4247"
-       transform="translate(107.14286,-10)">
-      <ellipse
-         ry="30"
-         rx="40"
-         cy="130"
-         cx="1080"
-         id="path4235"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="40"
-         rx="50"
-         cy="160"
-         cx="1130"
-         id="path4237"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="40"
-         rx="50"
-         cy="180"
-         cx="1070"
-         id="path4239"
-         style="fill:#ffffff;fill-opacity:1" />
-      <ellipse
-         ry="20"
-         rx="40"
-         cy="200"
-         cx="1120"
-         id="path4241"
-         style="fill:#ffffff;fill-opacity:1" />
-      <circle
-         r="30"
-         cy="182.85715"
-         cx="1161.4286"
-         id="path4243"
-         style="fill:#ffffff;fill-opacity:1" />
-    </g>
-  </g>
+     inkscape:label="Clouds"
+     style="display:inline" />
 </svg>
