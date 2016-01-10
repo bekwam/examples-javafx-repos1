@@ -1,5 +1,5 @@
 /*
- * Copyright 2015 Bekwam, Inc
+ * Copyright 2016 Bekwam, Inc
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -15,11 +15,17 @@
  */
 package com.bekwam.examples.javafx.table;
 
+import com.google.inject.Guice;
+import com.google.inject.Injector;
+
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.input.KeyCode;
 import javafx.stage.Stage;
+import javafx.util.Callback;
 
 /**
  * @author carl_000
@@ -30,8 +36,33 @@ public class TableApp extends Application {
     @Override
     public void start(Stage primaryStage) throws Exception {
 
-        Parent p = FXMLLoader.load(TableApp.class.getResource("/Persons.fxml"));
+    	Injector injector = Guice.createInjector(new TableAppModule());
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(
+    			TableApp.class.getResource("/Persons.fxml"),
+    			null,
+    			new JavaFXBuilderFactory(),
+    			new Callback<Class<?>, Object>() {
+    				@Override
+    	    		public Object call(Class<?> clazz) {
+    					return injector.getInstance(clazz);
+    				}
+    			});
+    	
+        Parent p = fxmlLoader.load();
+        
+        PersonsController pc = fxmlLoader.getController();
+        
         Scene scene = new Scene(p);
+        
+        scene.setOnKeyPressed((evt) -> {
+        	if( evt.getCode() == KeyCode.DELETE ) {
+        		pc.deletePersons();
+        	} else if( evt.getCode() == KeyCode.INSERT ) {
+        		pc.addPerson();
+        	}
+        });
+
         primaryStage.setTitle( "Person Table App");
         primaryStage.setScene( scene );
         primaryStage.show();

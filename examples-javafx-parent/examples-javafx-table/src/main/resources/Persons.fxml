@@ -1,14 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.geometry.*?>
-<?import javafx.scene.control.*?>
-<?import java.lang.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" spacing="20.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.table.PersonsController">
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1024.0" spacing="20.0" xmlns="http://javafx.com/javafx/8.0.66" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.table.PersonsController">
    <children>
-      <TableView fx:id="tblPersons" VBox.vgrow="ALWAYS">
+      <HBox alignment="CENTER_LEFT" spacing="20.0">
+         <children>
+            <Label text="Filter" />
+            <HBox alignment="CENTER_LEFT" spacing="2.0">
+               <children>
+                  <TextField fx:id="tfFilter" minWidth="-Infinity" onAction="#filterTable" prefWidth="300.0" />
+                  <Button mnemonicParsing="false" onAction="#clearFilter" text="X" />
+               </children>
+            </HBox>
+         </children>
+      </HBox>
+      <TableView fx:id="tblPersons" editable="true" VBox.vgrow="ALWAYS">
         <columns>
           <TableColumn fx:id="tcFirstName" minWidth="100.0" prefWidth="100.0" text="First Name" />
           <TableColumn fx:id="tcLastName" minWidth="100.0" prefWidth="100.0" text="Last Name" />
@@ -18,8 +33,8 @@
             <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
          </columnResizePolicy>
       </TableView>
-      <Button mnemonicParsing="false" onAction="#addPerson" text="+" VBox.vgrow="NEVER" />
-      <HBox spacing="20.0" VBox.vgrow="NEVER">
+      <Button fx:id="btnAdd" mnemonicParsing="false" onAction="#addPerson" text="+" VBox.vgrow="NEVER" />
+      <HBox fx:id="hboxStatus" spacing="20.0" VBox.vgrow="NEVER">
          <children>
             <ProgressBar fx:id="pbStatus" prefWidth="200.0" progress="0.0" />
             <Label fx:id="lblStatus" text="Label" />
