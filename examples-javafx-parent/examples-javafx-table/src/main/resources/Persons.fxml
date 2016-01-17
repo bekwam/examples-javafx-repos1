@@ -21,10 +21,12 @@
                   <Button mnemonicParsing="false" onAction="#clearFilter" text="X" />
                </children>
             </HBox>
+            <Button mnemonicParsing="false" onAction="#refresh" text="Refresh" />
          </children>
       </HBox>
       <TableView fx:id="tblPersons" editable="true" VBox.vgrow="ALWAYS">
         <columns>
+            <TableColumn fx:id="tcType" prefWidth="75.0" text="Type" />
           <TableColumn fx:id="tcFirstName" minWidth="100.0" prefWidth="100.0" text="First Name" />
           <TableColumn fx:id="tcLastName" minWidth="100.0" prefWidth="100.0" text="Last Name" />
             <TableColumn fx:id="tcEmail" minWidth="100.0" prefWidth="100.0" text="Email" />

@@ -25,6 +25,11 @@ import javafx.beans.property.StringProperty;
  */
 public class Person {
 
+	private final static int MAX_FIRST_NAME_LEN = 50;
+	private final static int MAX_LAST_NAME_LEN = 50;
+	private final static int MAX_EMAIL_LEN = 100;
+	
+	private StringProperty personType = new SimpleStringProperty("Friend");
 	private LongProperty personId = new SimpleLongProperty(-1L);
     private StringProperty firstName = new SimpleStringProperty("firstName");
     private StringProperty lastName = new SimpleStringProperty("lastName");
@@ -33,6 +38,16 @@ public class Person {
     public Person() {
     }
 
+    public String getPersonType() { 
+    	return personType.get(); 
+    }
+    
+    public void setPersonType(String personType) { 
+    	this.personType.setValue(personType); 
+    }
+    
+    public StringProperty personTypeProperty() { return personType; }
+    
     public Long getPersonId() { 
     	return personId.get(); 
     }
@@ -73,6 +88,35 @@ public class Person {
 
     public StringProperty emailProperty() { return email; }
 
+    public String validate() {
+    
+    	if( firstName.get() == null || firstName.get().isEmpty() ) {
+    		return "First name is required";
+    	}
+    	
+    	if( firstName.get().length() > MAX_FIRST_NAME_LEN ) {
+    		return "First name cannot contain more than " + MAX_FIRST_NAME_LEN + " characters.";
+    	}
+    	
+    	if( lastName.get() == null || lastName.get().isEmpty() ) {
+    		return "Last name is required";
+    	}
+
+    	if( lastName.get().length() > MAX_LAST_NAME_LEN ) {
+    		return "Last name cannot contain more than " + MAX_LAST_NAME_LEN + " characters.";
+    	}
+
+    	if( email.get() == null || email.get().isEmpty() ) {
+    		return "Email is required";
+    	}
+
+    	if( email.get().length() > MAX_EMAIL_LEN ) {
+    		return "Email cannot contain more than " + MAX_EMAIL_LEN + " characters.";
+    	}
+
+    	return "";
+    }
+    
 	@Override
 	public String toString() {
 		return "Person [personId=" + personId + ", firstName=" + firstName + ", lastName=" + lastName + ", email="

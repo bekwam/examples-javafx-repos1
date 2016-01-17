@@ -49,6 +49,9 @@ public class PersonsController {
 	@FXML
     TableView<Person> tblPersons;
 
+	@FXML
+	TableColumn<Person, String> tcType;
+	
     @FXML
     TableColumn<Person, String> tcFirstName;
 
@@ -79,6 +82,9 @@ public class PersonsController {
     @Inject
     Provider<PersonsCellFactory> personsCellFactoryProvider;
     
+    @Inject
+    Provider<PersonTypeCellFactory> personTypeCellFactoryProvider;
+    
     private final ObservableList<Person> personsActiveRecord;
     
     @Inject
@@ -89,6 +95,13 @@ public class PersonsController {
     @FXML
     public void initialize() {
 
+    	PersonTypeCellFactory ptcf = personTypeCellFactoryProvider.get();
+    	ptcf.setDeletePersonsHandler((evt) -> deletePersons());
+    	tcType.setCellValueFactory(
+    			new PropertyValueFactory<Person, String>("personType")
+    	);
+    	tcType.setCellFactory(ptcf);
+    	
     	PersonsCellFactory pcf1 = personsCellFactoryProvider.get();
     	pcf1.setDeletePersonsHandler((evt) -> deletePersons());
         tcFirstName.setCellValueFactory(
@@ -235,4 +248,31 @@ public class PersonsController {
 
     	doFilterTable( (TextField)evt.getSource() );
     }    
+    
+    @FXML
+    public void refresh() {
+    	
+    	Task<List<Person>> task = new Task<List<Person>>() {
+    		@Override
+    		public List<Person> call() throws Exception {
+
+    			List<Person> persons = dao.findAll();
+
+    			return persons;
+    		}
+
+			@Override
+			protected void succeeded() {
+				super.succeeded();
+				tblPersons.getItems().clear();
+				tblPersons.getItems().addAll( getValue() );
+			}
+    	};
+    	
+    	hboxStatus.visibleProperty().bind( task.runningProperty() );
+    	pbStatus.progressProperty().bind( task.progressProperty() );
+    	lblStatus.textProperty().bind( task.messageProperty() );
+
+    	new Thread(task).start();
+    }
 }

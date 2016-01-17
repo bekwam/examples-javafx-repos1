@@ -28,4 +28,6 @@ public interface PersonDAO {
 	void deletePersons(List<Long> personsIds);
 	
 	void updatePerson(Person p);
+	
+	List<Person> findAll();
 }

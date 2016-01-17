@@ -24,6 +24,7 @@ import javafx.fxml.JavaFXBuilderFactory;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 import javafx.util.Callback;
 
@@ -32,12 +33,17 @@ import javafx.util.Callback;
  */
 public class TableApp extends Application {
 
-
+	private Injector injector;
+	
     @Override
+	public void init() throws Exception {
+		super.init();
+    	injector = Guice.createInjector(new TableAppModule());
+	}
+
+	@Override
     public void start(Stage primaryStage) throws Exception {
 
-    	Injector injector = Guice.createInjector(new TableAppModule());
-    	
     	FXMLLoader fxmlLoader = new FXMLLoader(
     			TableApp.class.getResource("/Persons.fxml"),
     			null,
@@ -55,14 +61,14 @@ public class TableApp extends Application {
         
         Scene scene = new Scene(p);
         
-        scene.setOnKeyPressed((evt) -> {
+        scene.addEventFilter(KeyEvent.KEY_PRESSED, (evt) -> {
         	if( evt.getCode() == KeyCode.DELETE ) {
         		pc.deletePersons();
         	} else if( evt.getCode() == KeyCode.INSERT ) {
         		pc.addPerson();
-        	}
+        	}        	
         });
-
+        
         primaryStage.setTitle( "Person Table App");
         primaryStage.setScene( scene );
         primaryStage.show();

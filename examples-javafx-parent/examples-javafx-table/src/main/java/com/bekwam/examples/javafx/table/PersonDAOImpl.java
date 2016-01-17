@@ -15,6 +15,7 @@
  */
 package com.bekwam.examples.javafx.table;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -64,7 +65,6 @@ public class PersonDAOImpl implements PersonDAO {
 		try {
 			Thread.sleep(1000L);
 		} catch (InterruptedException ignore) {}
-
 	}
 
 	/* (non-Javadoc)
@@ -78,7 +78,16 @@ public class PersonDAOImpl implements PersonDAO {
 		try {
 			Thread.sleep(1000L);
 		} catch (InterruptedException ignore) {}
-
 	}
 
+	@Override
+	public List<Person> findAll() {
+		List<Person> persons = Collections.emptyList();
+		
+		try {
+			Thread.sleep(1000L);
+		} catch (InterruptedException ignore) {}
+		
+		return persons;
+	}
 }

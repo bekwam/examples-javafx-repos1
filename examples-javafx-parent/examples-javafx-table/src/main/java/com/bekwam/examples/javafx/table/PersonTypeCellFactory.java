@@ -30,7 +30,7 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
-import javafx.scene.control.cell.TextFieldTableCell;
+import javafx.scene.control.cell.ComboBoxTableCell;
 import javafx.scene.layout.VBox;
 import javafx.stage.Popup;
 import javafx.util.Callback;
@@ -39,7 +39,7 @@ import javafx.util.converter.DefaultStringConverter;
 /**
  * @author carl_000
  */
-public class PersonsCellFactory implements Callback<TableColumn<Person, String>, TableCell<Person, String>> {
+public class PersonTypeCellFactory implements Callback<TableColumn<Person, String>, TableCell<Person, String>> {
 
 	private Logger logger = Logger.getLogger("com.bekwam.examples.javafx.table");
 
@@ -51,14 +51,18 @@ public class PersonsCellFactory implements Callback<TableColumn<Person, String>,
     @Override
     public TableCell<Person, String> call(TableColumn<Person, String> param) {
 
-        return new TextFieldTableCell<Person, String>(new DefaultStringConverter()) {      
+        return new ComboBoxTableCell<Person, String>(new DefaultStringConverter()) {      
         	
         	{
             	ContextMenu cm = new ContextMenu();
             	MenuItem deletePersonsMenuItem = new MenuItem("Delete");
-            	deletePersonsMenuItem.setOnAction( PersonsCellFactory.this.deletePersonsHandler );
+            	deletePersonsMenuItem.setOnAction( PersonTypeCellFactory.this.deletePersonsHandler );
             	cm.getItems().add(deletePersonsMenuItem);
-            	this.setContextMenu(cm);      
+            	this.setContextMenu(cm);    
+            	
+            	this.getItems().addAll( "Friend", "Co-worker", "Other" );
+            	
+            	this.setEditable(true);
         	}
         	
             @Override
