@@ -21,6 +21,7 @@
         <module>examples-javafx-sortme</module>
         <module>examples-javafx-background</module>
         <module>examples-javafx-table</module>
+        <module>examples-javafx-plugin-parent</module>
     </modules>
 
     <dependencies>
