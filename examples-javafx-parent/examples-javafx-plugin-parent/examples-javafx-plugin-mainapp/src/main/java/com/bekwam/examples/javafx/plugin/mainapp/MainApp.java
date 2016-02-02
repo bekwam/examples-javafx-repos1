@@ -21,9 +21,16 @@ import java.net.URLClassLoader;
 import com.bekwam.examples.javafx.plugin.framework.Plugin;
 
 import javafx.application.Application;
-import javafx.geometry.Pos;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.ChoiceBox;
+import javafx.scene.control.Label;
+import javafx.scene.control.Separator;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
@@ -33,6 +40,8 @@ import javafx.stage.Stage;
  */
 public class MainApp extends Application {
 
+	private final ObservableList<Plugin> plugins = FXCollections.observableArrayList();
+	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		
@@ -42,24 +51,48 @@ public class MainApp extends Application {
 		String pathToPlugin = 
 				"/home/carl/.m2/repository/com/bekwam/examples-javafx-plugin-someplugin/1.0-SNAPSHOT/examples-javafx-plugin-someplugin-1.0-SNAPSHOT.jar";
 		
+		// on mac /Users/carlwalker/.m2/repository/com/bekwam/examples-javafx-plugin-someplugin/1.0-SNAPSHOT/examples-javafx-plugin-someplugin-1.0-SNAPSHOT.jar
+		
 		String pluginClass = 
 				"com.bekwam.examples.javafx.plugin.someplugin.SomePlugin";
 
-		URL url = new URL("jar:file:" + pathToPlugin + "!/");
-		
-		ClassLoader cl = new URLClassLoader( new URL[]{ url } );
-
-		final Plugin plugin = (Plugin)Class.forName(pluginClass, true, cl).newInstance();
-		
-		plugin.init();
-		
 		VBox vbox = new VBox();
 		
-		Button b = new Button("Run Plugin");
-		b.setOnAction( (evt) -> plugin.operate() );
+		Label label = new Label("JAR");
+		TextField tfJarFile = new TextField();
+		tfJarFile.setText( pathToPlugin );
 		
-		vbox.setAlignment(Pos.CENTER);
-		vbox.getChildren().add( b );
+		Label label_cl = new Label("Class");
+		TextField tfClass = new TextField();
+		tfClass.setText( pluginClass );
+		
+		Button load_b = new Button("Load Plugin");
+		load_b.setOnAction((evt) -> {
+			
+			try {
+				URL url = new URL("jar:file:" + tfJarFile.getText() + "!/");
+			
+				ClassLoader cl = new URLClassLoader( new URL[]{ url } );
+
+				final Plugin plugin = (Plugin)Class.forName(tfClass.getText(), true, cl).newInstance();
+			
+				plugin.init();
+				
+				plugins.add( plugin );
+				
+			} catch(Exception exc) {
+				exc.printStackTrace();
+			}
+		});
+		
+		ChoiceBox<Plugin> cb = new ChoiceBox<>();
+		cb.itemsProperty().bind( new SimpleObjectProperty<ObservableList<Plugin>>(plugins) );
+		
+		Button b = new Button("Run Plugin");
+		b.setOnAction( (evt) -> cb.getSelectionModel().getSelectedItem().operate() );
+		
+		vbox.setPadding(new Insets(40.0d));
+		vbox.getChildren().addAll( label, tfJarFile, label_cl, tfClass, load_b, new Separator(), cb, b );
 		
 		Scene scene = new Scene(vbox, 1024, 768);
 		
