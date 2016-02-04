@@ -1,5 +1,6 @@
 package com.bekwam.examples.javafx.dynamic.app_core;
 
+import com.bekwam.examples.javafx.dynamic.api.ServiceObject1;
 import com.google.inject.AbstractModule;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

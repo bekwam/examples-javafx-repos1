@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <parent>
-        <artifactId>examples-javafx-parent</artifactId>
+        <artifactId>examples-javafx-dynamic-parent</artifactId>
         <groupId>com.bekwam</groupId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -12,22 +12,17 @@
     <artifactId>examples-javafx-dynamic</artifactId>
 
 	<dependencies>
-	        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-            <version>18.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.google.inject</groupId>
-            <artifactId>guice</artifactId>
-            <version>4.0</version>
-        </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
             <version>0.9.10</version>
         </dependency>
-
+        <dependency>
+            <groupId>com.bekwam</groupId>
+            <artifactId>examples-javafx-dynamic-framework</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        
     </dependencies>
 
     <build>

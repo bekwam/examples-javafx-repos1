@@ -22,6 +22,7 @@
         <module>examples-javafx-background</module>
         <module>examples-javafx-table</module>
         <module>examples-javafx-plugin-parent</module>
+        <module>examples-javafx-dynamic-parent</module>
     </modules>
 
     <dependencies>

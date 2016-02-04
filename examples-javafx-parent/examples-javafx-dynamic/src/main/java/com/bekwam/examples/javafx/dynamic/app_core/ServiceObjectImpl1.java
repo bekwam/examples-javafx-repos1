@@ -3,6 +3,8 @@ package com.bekwam.examples.javafx.dynamic.app_core;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.bekwam.examples.javafx.dynamic.api.ServiceObject1;
+
 /**
  * Created by carl_000 on 2/14/2015.
  */
