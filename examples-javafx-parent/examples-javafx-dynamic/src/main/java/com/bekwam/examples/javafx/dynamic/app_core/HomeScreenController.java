@@ -1,22 +1,9 @@
 package com.bekwam.examples.javafx.dynamic.app_core;
 
-import java.io.IOException;
-import java.net.URL;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.lang3.StringUtils;
-import org.reflections.Reflections;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.bekwam.examples.javafx.dynamic.annotations.SubApp;
 import com.google.inject.AbstractModule;
 import com.google.inject.Guice;
 import com.google.inject.Injector;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -31,6 +18,15 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import javafx.util.BuilderFactory;
 import javafx.util.Callback;
+import org.apache.commons.lang3.StringUtils;
+import org.reflections.Reflections;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import java.io.IOException;
+import java.net.URL;
+import java.nio.file.Path;
+import java.util.*;
 
 /**
  * Created by carl_000 on 2/14/2015.
@@ -55,7 +51,10 @@ public class HomeScreenController {
         if( logger.isDebugEnabled() ) {
             logger.debug("[INIT]");
         }
-        CoreModule module = new CoreModule();
+    }
+
+    public void initializeHome(List<Path> subappJars, String startupCommandsFileName) {
+        CoreModule module = new CoreModule(subappJars, startupCommandsFileName);
         injector = Guice.createInjector(module);
         builderFactory = new JavaFXBuilderFactory();
     }

@@ -15,29 +15,31 @@
  */
 package com.bekwam.examples.javafx.dynamic.app_core;
 
+import javafx.application.Platform;
+import javafx.beans.property.SimpleObjectProperty;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.concurrent.Task;
+import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.control.Alert.AlertType;
+import javafx.stage.FileChooser;
+import javafx.stage.FileChooser.ExtensionFilter;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.inject.Inject;
+import javax.inject.Named;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
 import java.util.List;
-
-import javax.inject.Inject;
-import javax.inject.Named;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.stage.FileChooser;
-import javafx.stage.FileChooser.ExtensionFilter;
 
 /**
  * JavaFX Controller for Preferences screen
@@ -53,7 +55,7 @@ public class PreferencesController {
 	TextField tfJARFolder;
 	
 	@FXML
-	ListView<SubAppItem> lvSubApps;
+	ListView<Path> lvSubApps;
 	
 	@FXML
 	ListView<File> lvJARs;
@@ -61,7 +63,22 @@ public class PreferencesController {
 	@Inject
 	@Named("SubAppFolder")
 	File subappFolder;
-	
+
+	@Inject
+	@Named("SubAppJars")
+	ObservableList<Path> subappJars;
+
+	@Inject
+	@Named("StartupCommandsFullPath")
+	String startupCommandsFullPath;
+
+	@FXML
+	public void initialize() {
+
+		lvSubApps.itemsProperty().bind( new SimpleObjectProperty<>(subappJars) );
+
+	}
+
 	@FXML
 	public void browse(ActionEvent evt) {
 		
@@ -98,43 +115,125 @@ public class PreferencesController {
 			alert.showAndWait();
 		} else {
 			
-			for( File sf : selectedFiles ) {
-				
-				Path sf_p = sf.toPath();
-				Path target_p = Paths.get(subappFolder.getAbsolutePath(), sf.getName());
-				
-				if( logger.isDebugEnabled() ) {
-					logger.debug("[IMPORT] importing " + sf_p + " to " + target_p);					
-				}
-				
-				try {
-					
-					//
-					// It would be a good idea to validate a signature here to
-					// prove that the code is coming from a known source.
-					// 
-					// Also, SubApp validation should be here to make sure that
-					// the JAR is a valid SubApp.
-					//
-					
-					Files.copy(sf_p,  target_p, StandardCopyOption.REPLACE_EXISTING);
-					
-				} catch(Exception exc) {
-					logger.error( "error copying " + sf_p + " to " + target_p, exc);
-					
-					Alert alert = new Alert(AlertType.ERROR);
-					alert.setTitle("Import");
-					alert.setHeaderText("Import Error");
-					alert.setContentText( "Error copying " + sf_p + " to " + target_p );
-					alert.showAndWait();
-					break;
-				}
+				Task<Void> task = new Task<Void>() {
+					@Override
+					protected Void call() throws Exception {
+
+						for( File sf : selectedFiles ) {
+
+							Path sf_p = sf.toPath();
+							Path target_p = Paths.get(subappFolder.getAbsolutePath(), sf.getName());
+
+							if (logger.isDebugEnabled()) {
+								logger.debug("[IMPORT] importing " + sf_p + " to " + target_p);
+							}
+
+							//
+							// It would be a good idea to validate a signature here to
+							// prove that the code is coming from a known source.
+							//
+							// Also, SubApp validation should be here to make sure that
+							// the JAR is a valid SubApp.
+							//
+
+							Files.copy(sf_p, target_p, StandardCopyOption.REPLACE_EXISTING);
+
+							Platform.runLater( () -> {
+								subappJars.add( target_p );
+							});
+						}
+
+						return null;
+					}
+
+					@Override
+					protected void failed() {
+						super.failed();
+						logger.error( "error importing", getException());
+
+						Alert alert = new Alert(AlertType.ERROR);
+						alert.setTitle("Import Error");
+						alert.setHeaderText( getException().getClass().getName() );
+						alert.setContentText( getException().getMessage() );
+						alert.showAndWait();
+
+					}
+				};
+				new Thread(task).start();
 			}
 		}
-	}
-	
+
 	@FXML
 	public void uninstall() {
-		
+
+		List<Path> selectedFiles = lvSubApps.getSelectionModel().getSelectedItems();
+		if (selectedFiles == null || selectedFiles.isEmpty()) {
+			Alert alert = new Alert(AlertType.WARNING);
+			alert.setTitle("Uninstall");
+			alert.setHeaderText("Select JARs");
+			alert.setContentText("No JAR files selected to uninstall");
+			alert.showAndWait();
+		} else {
+
+			Alert conf = new Alert(AlertType.CONFIRMATION);
+			conf.setTitle("Uninstall");
+			conf.setHeaderText("Uninstall JARs?");
+
+			String ct = "";
+			for( Path sp : selectedFiles ) {
+				ct += sp.getFileName();
+				ct += "\n";
+			}
+			conf.setContentText( ct );
+
+			conf.showAndWait()
+					.filter(response -> response == ButtonType.OK)
+					.ifPresent(response ->	{
+
+						Task<Void> task = new Task<Void>() {
+							@Override
+							protected Void call() throws Exception {
+								for( Path sf : selectedFiles ) {
+
+									//
+									// Delete command is deferred b/c holding on to file handled since it was
+									// loaded
+									//
+									try (
+											BufferedWriter bw = new BufferedWriter(new FileWriter(startupCommandsFullPath, true))
+											) {
+										bw.write("D " + sf.toAbsolutePath().toString());
+										bw.newLine();
+
+									} catch(IOException exc) {
+										logger.error("can't write command to file " + startupCommandsFullPath, exc);
+									}
+
+									Platform.runLater( () -> subappJars.remove(sf) );
+								}
+								return null;
+							}
+
+							@Override
+							protected void succeeded() {
+								super.succeeded();
+								Alert alert = new Alert(AlertType.INFORMATION);
+								alert.setTitle("Uninstall");
+								alert.setHeaderText("Uninstall Successful");
+								alert.setContentText("You need to restart the app for the install to take effect.");
+								alert.showAndWait();
+							}
+
+							@Override
+							protected void failed() {
+								super.failed();
+								logger.error( "delete task failed", getException());
+							}
+						};
+						new Thread(task).start();
+					}
+			);
+
+		}
 	}
 }

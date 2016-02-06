@@ -1,13 +1,17 @@
 package com.bekwam.examples.javafx.dynamic.app_core;
 
-import java.io.File;
-
+import com.bekwam.examples.javafx.dynamic.api.ServiceObject1;
+import com.google.inject.AbstractModule;
+import com.google.inject.TypeLiteral;
+import com.google.inject.name.Names;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.bekwam.examples.javafx.dynamic.api.ServiceObject1;
-import com.google.inject.AbstractModule;
-import com.google.inject.name.Names;
+import java.io.File;
+import java.nio.file.Path;
+import java.util.List;
 
 /**
  * Created by carl_000 on 2/14/2015.
@@ -21,7 +25,15 @@ public class CoreModule extends AbstractModule {
     
     private File appFolder;
     private File subappFolder;
-    
+
+    private final ObservableList<Path> subappJars;
+    private final String startupCommandsFullPath;
+
+    public CoreModule(List<Path> subappJars, String startupCommandsFullPath) {
+        this.subappJars = FXCollections.observableArrayList(subappJars);
+        this.startupCommandsFullPath = startupCommandsFullPath;
+    }
+
     @Override
     protected void configure() {
 
@@ -50,6 +62,10 @@ public class CoreModule extends AbstractModule {
         bind( File.class ).annotatedWith(Names.named("SubAppFolder")).toInstance(subappFolder);
         
         bind( ServiceObject1.class ).to( ServiceObjectImpl1.class ).asEagerSingleton();
-        
+
+        TypeLiteral<ObservableList<Path>> pathsType = new TypeLiteral<ObservableList<Path>>() {};
+        bind( pathsType ).annotatedWith(Names.named("SubAppJars")).toInstance(subappJars);
+
+        bind( String.class ).annotatedWith(Names.named("StartupCommandsFullPath")).toInstance(startupCommandsFullPath);
     }
 }
