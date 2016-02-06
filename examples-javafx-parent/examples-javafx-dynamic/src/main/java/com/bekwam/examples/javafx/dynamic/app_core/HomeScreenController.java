@@ -46,7 +46,6 @@ public class HomeScreenController {
 
     private Injector injector;
     private BuilderFactory builderFactory;
-    private Callback<Class<?>, Object> coreGuiceControllerFactory;
 
     private Map<Object, Stage> stageCache = new LinkedHashMap<>();
     private Map<Object, Callback<Class<?>, Object>> gcfCache = new LinkedHashMap<>();
@@ -59,7 +58,6 @@ public class HomeScreenController {
         CoreModule module = new CoreModule();
         injector = Guice.createInjector(module);
         builderFactory = new JavaFXBuilderFactory();
-        coreGuiceControllerFactory = clazz -> injector.getInstance(clazz);
     }
 
     public void initializeSubApps(ClassLoader cl, URL[] urls) throws Exception  {
@@ -68,6 +66,8 @@ public class HomeScreenController {
             logger.debug("[INIT SUBAPPS]");
         }
 
+        Thread.currentThread().setContextClassLoader( cl );  // used by FXMLLoader
+        
         Reflections reflections = new Reflections(DEFAULT_PACKAGE_TO_SCAN, cl, urls);
 
         Set<Class<?>> subapps = reflections.getTypesAnnotatedWith(SubApp.class);
