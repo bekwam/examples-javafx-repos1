@@ -4,6 +4,7 @@
     <groupId>com.bekwam</groupId>
     <artifactId>examples-javafx-dynamic-parent</artifactId>
     <version>1.0-SNAPSHOT</version>
+        <relativePath>../examples-javafx-dynamic-parent</relativePath>
   </parent>
   <artifactId>examples-javafx-dynamic-subapp_c</artifactId>
    <dependencies>
