@@ -1,4 +1,4 @@
-package com.bekwam.examplees.javafx.nettyinaction.ch2;
+package com.bekwam.examples.javafx.nettyinaction.ch2;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

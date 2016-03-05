@@ -1,4 +1,4 @@
-package com.bekwam.examplees.javafx.nettyinaction.ch2;
+package com.bekwam.examples.javafx.nettyinaction.ch2;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

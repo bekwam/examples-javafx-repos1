@@ -1,6 +1,4 @@
-package com.bekwam.examplees.javafx.nettyinaction.ch2;
-
-import java.net.InetSocketAddress;
+package com.bekwam.examples.javafx.nettyinaction.ch2;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -9,6 +7,8 @@ import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+
+import java.net.InetSocketAddress;
 
 public class EchoServer {
 
