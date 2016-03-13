@@ -53,7 +53,6 @@ public class EchoServerWS {
 				p.addLast(new WebSocketServerProtocolHandler("/ws"));
 				p.addLast(new TextWebSocketFrameHandler(channelGroup));
 			}
-			
 		};
 	}
 	

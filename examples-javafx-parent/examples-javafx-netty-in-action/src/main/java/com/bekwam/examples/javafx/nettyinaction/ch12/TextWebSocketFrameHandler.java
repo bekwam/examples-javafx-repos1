@@ -16,6 +16,7 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 	
 	@Override
 	public void userEventTriggered(ChannelHandlerContext ctx, Object evt) throws Exception {
+		System.out.println("[USER E] evt=" + evt);
 		if( evt == WebSocketServerProtocolHandler.ServerHandshakeStateEvent.HANDSHAKE_COMPLETE ) {
 			ctx.pipeline().remove(HttpRequestHandler.class);
 			channelGroup.writeAndFlush(new TextWebSocketFrame("Client " + ctx.channel()+ " joined"));
@@ -28,6 +29,8 @@ public class TextWebSocketFrameHandler extends SimpleChannelInboundHandler<TextW
 
 	@Override
 	protected void channelRead0(ChannelHandlerContext ctx, TextWebSocketFrame msg) throws Exception {
+		
+		System.out.println("[READ0] in server-side ws handler");
 		channelGroup.writeAndFlush(msg.retain());
 	}
 

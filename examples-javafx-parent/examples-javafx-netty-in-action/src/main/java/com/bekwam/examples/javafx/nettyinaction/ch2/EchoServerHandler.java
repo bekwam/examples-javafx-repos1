@@ -6,33 +6,24 @@ import org.slf4j.LoggerFactory;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandler.Sharable;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.channel.ChannelInboundHandlerAdapter;
+import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.util.CharsetUtil;
 
 @Sharable
-public class EchoServerHandler extends ChannelInboundHandlerAdapter {
+public class EchoServerHandler extends SimpleChannelInboundHandler<ByteBuf> {
 
 	private Logger logger = LoggerFactory.getLogger( EchoServerHandler.class );
 	
 	@Override
-	public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
+	protected void channelRead0(ChannelHandlerContext ctx, ByteBuf in) throws Exception {
 		
-		ByteBuf in = (ByteBuf)msg;
 		String in_s = in.toString(CharsetUtil.UTF_8);
 		String uc = in_s.toUpperCase();
 		if( logger.isInfoEnabled() ) {
 			logger.info("[READ] read " + in_s + ", writing " + uc);
 		}
 		in.setBytes(0,  uc.getBytes(CharsetUtil.UTF_8));
-		ctx.write(in);  // writes bytes back to sender (no flush)
-	}
-
-	@Override
-	public void channelReadComplete(ChannelHandlerContext ctx) throws Exception {	
-		if( logger.isDebugEnabled() ) {
-			logger.debug("[READ COMPLETE]");
-		}
-		ctx.flush();
+		ctx.write(in);
 	}
 	
 	@Override
