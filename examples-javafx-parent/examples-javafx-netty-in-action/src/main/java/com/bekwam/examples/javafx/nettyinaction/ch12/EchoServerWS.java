@@ -18,19 +18,29 @@ import io.netty.handler.codec.http.websocketx.WebSocketServerProtocolHandler;
 import io.netty.handler.stream.ChunkedWriteHandler;
 import io.netty.util.concurrent.ImmediateEventExecutor;
 
+/**
+ * Server process using WebSocket protocol
+ * 
+ * Also serves up an index.html page for browsers
+ * 
+ * Based on "Netty in Action" example in Ch 12
+ * 
+ * @author carlwalker
+ *
+ */
 public class EchoServerWS {
 
-	private final ChannelGroup channelGroup = new DefaultChannelGroup(ImmediateEventExecutor.INSTANCE);	
+	private final ChannelGroup channelGroup = new DefaultChannelGroup(ImmediateEventExecutor.INSTANCE);
 	private final EventLoopGroup group = new NioEventLoopGroup();
 	private Channel channel;
 
 	public ChannelFuture start(InetSocketAddress address) {
-		
+	
 		ServerBootstrap bootstrap = new ServerBootstrap();
 		bootstrap
 			.group(group)
 			.channel(NioServerSocketChannel.class)
-			.childHandler(createInitializer(channelGroup));
+			.childHandler(createInitializer());
 		
 		ChannelFuture future = bootstrap.bind(address);
 		future.syncUninterruptibly();
@@ -39,7 +49,7 @@ public class EchoServerWS {
 		return future;
 	}
 	
-	protected ChannelInitializer<Channel> createInitializer(ChannelGroup channelGroup) {
+	protected ChannelInitializer<Channel> createInitializer() {
 	
 		return new ChannelInitializer<Channel>() {
 
@@ -49,9 +59,9 @@ public class EchoServerWS {
 				p.addLast(new HttpServerCodec() );
 				p.addLast(new ChunkedWriteHandler());
 				p.addLast(new HttpObjectAggregator(64 * 1024));
-				p.addLast(new HttpRequestHandler("/ws"));
+				p.addLast(new EchoServerHttpRequestHandler("/ws"));
 				p.addLast(new WebSocketServerProtocolHandler("/ws"));
-				p.addLast(new TextWebSocketFrameHandler(channelGroup));
+				p.addLast(new EchoServerWSHandler());
 			}
 		};
 	}

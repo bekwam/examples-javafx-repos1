@@ -10,6 +10,15 @@ import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import javafx.application.Platform;
 import javafx.beans.property.StringProperty;
 
+/**
+ * Netty WebSocket handler that sets a JavaFX property receivingMessageModel
+ * in response to an incoming TextWebSocketFrame
+ * 
+ * Based on WebSocketClient example in Netty project
+ * 
+ * @author carlwalker
+ *
+ */
 @Sharable
 public class EchoClientHandlerWS extends SimpleChannelInboundHandler<TextWebSocketFrame> {
 
@@ -21,16 +30,6 @@ public class EchoClientHandlerWS extends SimpleChannelInboundHandler<TextWebSock
 		this.receivingMessageModel = receivingMessageModel;
 	}
 	
-	
-	@Override
-	public void channelActive(ChannelHandlerContext ctx) throws Exception {
-		super.channelActive(ctx);
-		if( logger.isDebugEnabled() ) {
-			logger.debug("[CHANNEL ACTIVE]");
-		}
-	}
-
-
 	@Override
 	protected void channelRead0(ChannelHandlerContext arg0, TextWebSocketFrame in) throws Exception {
 		

@@ -5,6 +5,9 @@ import java.io.RandomAccessFile;
 import java.net.URISyntaxException;
 import java.net.URL;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
@@ -22,15 +25,28 @@ import io.netty.handler.codec.http.LastHttpContent;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.handler.stream.ChunkedNioFile;
 
-public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
+/**
+ * Handles HTTP traffic for server process including WebSocket upgrade
+ * 
+ * Returns web page (index.html) if contacting root context path.  If ending
+ * in /ws, pass along to next handler (a WebSocket handler).
+ * 
+ * Based on "Netty in Action" example in Ch 12
+ *
+ * @author carlwalker
+ *
+ */
+public class EchoServerHttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequest> {
+
+	private Logger logger = LoggerFactory.getLogger( EchoServerHttpRequestHandler.class );
 
 	private final String wsURI;
 	private File indexHTML;
 	
-	public HttpRequestHandler(String wsURI) throws URISyntaxException {
+	public EchoServerHttpRequestHandler(String wsURI) throws URISyntaxException {
 		this.wsURI = wsURI;		
 		String path = null;
-		URL url = HttpRequestHandler.class.getResource("/index.html");
+		URL url = EchoServerHttpRequestHandler.class.getResource("/index.html");
 		path = url.getPath();
 		indexHTML = new File(path);
 	}
@@ -83,7 +99,7 @@ public class HttpRequestHandler extends SimpleChannelInboundHandler<FullHttpRequ
 
 	@Override
 	public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
-		cause.printStackTrace();
+		logger.error("error processing http", cause);
 		ctx.close();
 	}
 }

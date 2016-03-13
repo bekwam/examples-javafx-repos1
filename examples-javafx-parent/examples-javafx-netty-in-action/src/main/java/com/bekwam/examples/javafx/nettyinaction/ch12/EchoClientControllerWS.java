@@ -3,7 +3,6 @@ package com.bekwam.examples.javafx.nettyinaction.ch12;
 import java.net.InetSocketAddress;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,7 +11,6 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
-import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.EventLoopGroup;
@@ -25,7 +23,6 @@ import io.netty.handler.codec.http.HttpObjectAggregator;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketClientHandshakerFactory;
 import io.netty.handler.codec.http.websocketx.WebSocketClientProtocolHandler;
-import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketVersion;
 import io.netty.util.CharsetUtil;
 import javafx.beans.property.BooleanProperty;
@@ -42,6 +39,16 @@ import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 
+/**
+ * JavaFX Controller interacting with a WebSocket server
+ * 
+ * Uses Netty for WebSocket protocol
+ * 
+ * Based on WebSocketClient example in Netty project
+ * 
+ * @author carlwalker
+ *
+ */
 public class EchoClientControllerWS {
 
 	private Logger logger = LoggerFactory.getLogger( EchoClientWS.class );
@@ -164,35 +171,7 @@ public class EchoClientControllerWS {
 		final WebSocketClientProtocolHandler handler =
 				  new WebSocketClientProtocolHandler(
 						  WebSocketClientHandshakerFactory.newHandshaker(
-								  new URI("ws://" + host + "/ws"), WebSocketVersion.V13, null, false, new DefaultHttpHeaders())) {
-
-									@Override
-									public void channelActive(ChannelHandlerContext ctx) throws Exception {
-										super.channelActive(ctx);
-										if( logger.isDebugEnabled() ) {
-											logger.debug("[CH ACTIVE]");
-										}
-									}
-
-									@Override
-									public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause)
-											throws Exception {
-										super.exceptionCaught(ctx, cause);
-										cause.printStackTrace();
-									}
-
-									@Override
-									protected void decode(ChannelHandlerContext ctx, WebSocketFrame frame,
-											List<Object> out) throws Exception {
-										super.decode(ctx, frame, out);
-										if( logger.isDebugEnabled() ) {
-											logger.debug("[DECODE]");
-										}
-									}
-									
-									
-			
-		};
+								  new URI("ws://" + host + "/ws"), WebSocketVersion.V13, null, false, new DefaultHttpHeaders()));
 		  
 		Task<Channel> task = new Task<Channel>() {
 
