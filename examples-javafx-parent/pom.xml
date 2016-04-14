@@ -23,6 +23,7 @@
         <module>examples-javafx-dynamic-parent</module>
     
     <module>examples-javafx-netty-in-action</module>
+    <module>examples-javafx-memory-tests</module>
     </modules>
 
     <dependencies>
