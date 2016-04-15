@@ -43,4 +43,11 @@ public class MyObject {
 	public void setData(String data) {
 		this.data = data;
 	}
+
+	@Override
+	public String toString() {
+		return "MyObject [id=" + id + ", data=" + data + "]";
+	}
+	
+	
 }

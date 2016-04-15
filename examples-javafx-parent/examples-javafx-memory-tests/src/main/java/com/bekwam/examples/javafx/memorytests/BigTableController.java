@@ -16,17 +16,24 @@
 package com.bekwam.examples.javafx.memorytests;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import org.apache.commons.lang3.RandomStringUtils;
 
-import javafx.beans.value.ObservableValue;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableColumn.CellDataFeatures;
+import javafx.scene.control.TableColumn.CellEditEvent;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.control.cell.TextFieldTableCell;
 
 /**
  * @author carl
@@ -37,38 +44,55 @@ public class BigTableController {
 	private final static int NUM_RECORDS = 20_000_000;
 	
 	@FXML
-	TableColumn<MyFXObject,Number> tcId;
+	TableColumn<MyObject,Number> tcId;
 	
 	@FXML
-	TableColumn<MyFXObject,String> tcData;
+	TableColumn<MyObject,String> tcData;
 	
 	@FXML
-	TableView<MyFXObject> tblObjects;
+	TableView<MyObject> tblObjects;
 	
 	@FXML
-	public void initialize(){
+	Button btnSave;
+	
+	private final BooleanProperty dirtyFlag = new SimpleBooleanProperty();
+	
+	private final Queue<UpdateObject> updateList = new LinkedList<>();
+	
+	static <T, S> T getObjectAtEvent(CellEditEvent<T, S> evt) {
 		
-/*		tcId.setCellValueFactory(new PropertyValueFactory<MyFXObject,Number>("id"));
+		TableView<T> tableView = evt.getTableView();
 		
-		tcData.setCellValueFactory(new PropertyValueFactory<MyFXObject,String>("data"));
-*/
-		tcId.setCellValueFactory(new PropertyValueFactory<MyFXObject,Number>("id") {
+		ObservableList<T> items = tableView.getItems();
+		
+		TablePosition<T,S> tablePosition = evt.getTablePosition();
+		
+		int rowId = tablePosition.getRow();
+		
+		T obj = items.get(rowId);
 
-			@Override
-			public ObservableValue<Number> call(CellDataFeatures<MyFXObject, Number> param) {
-				return param.getValue().idProperty();
-			}
-			
-		});
+		return obj;
+	}
+	
+	@FXML
+	public void initialize() {
 		
-		tcData.setCellValueFactory(new PropertyValueFactory<MyFXObject,String>("data") {
-
-			@Override
-			public ObservableValue<String> call(CellDataFeatures<MyFXObject, String> param) {
-				return param.getValue().dataProperty();
+		btnSave.disableProperty().bind( dirtyFlag.not() );
+		
+		// id is read-only
+		tcId.setCellValueFactory(new PropertyValueFactory<MyObject,Number>("id"));		
+		
+		tcData.setCellValueFactory(new PropertyValueFactory<MyObject,String>("data"));		
+		tcData.setCellFactory(TextFieldTableCell.forTableColumn());				
+		tcData.setOnEditCommit((evt) -> {
+			MyObject obj = getObjectAtEvent(evt);
+			if( !dirtyFlag.get() ) {
+				dirtyFlag.set(true);
 			}
-			
-		});
+			String oldData = obj.getData();
+			obj.setData( evt.getNewValue() );
+			updateList.add( new UpdateObject(obj.getId(), obj.getData(), oldData));
+		});		
 	}
 	
 	private List<MyObject> fetchData() {
@@ -91,16 +115,19 @@ public class BigTableController {
 		List<MyObject> objectsFromDataSource = fetchData();
 		
 		//
-		// transfer to an FX-ready object
-		//	
-		List<MyFXObject> fxObjects = new ArrayList<>();
-		for( MyObject obj : objectsFromDataSource ) {
-			fxObjects.add( new MyFXObject(obj.getId(), obj.getData()) );
-		}
-		
-		//
 		// put in control
 		//
-		tblObjects.setItems( FXCollections.observableList( fxObjects ));
+		tblObjects.setItems( FXCollections.observableList( objectsFromDataSource ));
+	}
+	
+	@FXML
+	public void save() {
+
+		UpdateObject uo = null;
+		while( (uo = updateList.poll()) != null ) {
+			System.out.println("updating " + uo);
+		}
+
+		dirtyFlag.set(false);
 	}
 }

@@ -15,20 +15,40 @@
  */
 package com.bekwam.examples.javafx.memorytests;
 
-import javafx.beans.property.SimpleStringProperty;
-
 /**
  * @author carl
  *
  */
-public class MySimpleStringProperty extends SimpleStringProperty {
-
-	private final Long id;  // correlating record identifier
+class UpdateObject {
 	
-	public MySimpleStringProperty(String val, Long id) {
-		super(val);
+	private final Long id;
+	private final String data;
+	private final String oldData;
+	
+	public UpdateObject(Long id, String data) {
+		this(id, data, "");
+	}
+
+	public UpdateObject(Long id, String data, String oldData) {
 		this.id = id;
+		this.data = data;
+		this.oldData = oldData;		
 	}
 	
-	public Long getId() { return id; }
-}
+	public Long getId() {
+		return id;
+	}
+
+	public String getData() {
+		return data;
+	}
+
+	public String getOldData() {
+		return oldData;
+	}
+
+	@Override
+	public String toString() {
+		return "UpdateObject [id=" + id + ", data=" + data + ", oldData=" + oldData + "]";
+	}
+};
