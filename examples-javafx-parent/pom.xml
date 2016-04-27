@@ -24,6 +24,7 @@
     
     <module>examples-javafx-netty-in-action</module>
     <module>examples-javafx-memory-tests</module>
+    <module>examples-javafx-woodland</module>
     </modules>
 
     <dependencies>

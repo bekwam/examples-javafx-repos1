@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
+
+<VBox fx:id="boardContainer" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="background" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.woodland.WoodlandController">
+   <children>
+      <Pane fx:id="board">
+         <children>
+            <Pane fx:id="boardPaneRow0">
+               <children>
+                  <Rectangle fx:id="sq0_0" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq0_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq0_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+               </children>
+            </Pane>
+            <Pane fx:id="boardPaneRow1" layoutY="100.0">
+               <children>
+                  <Rectangle fx:id="sq1_0" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq1_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq1_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+               </children>
+            </Pane>
+            <Pane fx:id="boardPaneRow2" layoutY="200.0">
+               <children>
+                  <Rectangle fx:id="sq2_0" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq2_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq2_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+               </children>
+            </Pane>
+            <ImageView fx:id="gamePiece" depthTest="DISABLE" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/Hedgehog.png" />
+               </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+            </ImageView>
+         </children>
+      </Pane>
+   </children>
+   <padding>
+      <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+   </padding>
+</VBox>

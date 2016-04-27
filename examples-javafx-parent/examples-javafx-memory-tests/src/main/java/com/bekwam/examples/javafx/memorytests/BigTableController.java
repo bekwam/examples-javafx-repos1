@@ -23,12 +23,16 @@ import java.util.Queue;
 import org.apache.commons.lang3.RandomStringUtils;
 
 import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleBooleanProperty;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableColumn.CellDataFeatures;
 import javafx.scene.control.TableColumn.CellEditEvent;
 import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
@@ -74,25 +78,46 @@ public class BigTableController {
 		return obj;
 	}
 	
+	private final EventHandler<TableColumn.CellEditEvent<MyObject,String>> dataEditCommitHandler = (evt) -> {
+		if( !dirtyFlag.get() ) {
+			dirtyFlag.set(true);
+		}
+		MyObject obj = getObjectAtEvent(evt);
+		String oldData = obj.getData();
+		obj.setData( evt.getNewValue() );
+		updateList.add( new UpdateObject(obj.getId(), obj.getData(), oldData));
+	};
+	
+	int pvCounter = 0;
+	
 	@FXML
 	public void initialize() {
 		
 		btnSave.disableProperty().bind( dirtyFlag.not() );
 		
 		// id is read-only
+/*		tcId.setCellValueFactory(new PropertyValueFactory<MyObject,Number>("id") {
+
+			@Override
+			public ObservableValue<Number> call(CellDataFeatures<MyObject, Number> param) {
+				return new ReadOnlyObjectWrapper<Number>(param.getValue().getId());
+			}
+			
+		});		
+*/
 		tcId.setCellValueFactory(new PropertyValueFactory<MyObject,Number>("id"));		
 		
-		tcData.setCellValueFactory(new PropertyValueFactory<MyObject,String>("data"));		
-		tcData.setCellFactory(TextFieldTableCell.forTableColumn());				
-		tcData.setOnEditCommit((evt) -> {
-			MyObject obj = getObjectAtEvent(evt);
-			if( !dirtyFlag.get() ) {
-				dirtyFlag.set(true);
+		tcData.setCellValueFactory(new PropertyValueFactory<MyObject,String>("data"){			
+			@Override
+			public ObservableValue<String> call(CellDataFeatures<MyObject, String> param) {
+				System.out.println("pvCounter=" + pvCounter++);
+				return new ReadOnlyObjectWrapper<String>(param.getValue().getData());
 			}
-			String oldData = obj.getData();
-			obj.setData( evt.getNewValue() );
-			updateList.add( new UpdateObject(obj.getId(), obj.getData(), oldData));
-		});		
+		
+		});
+		tcData.setCellFactory(TextFieldTableCell.forTableColumn());				
+		tcData.setOnEditCommit( dataEditCommitHandler );		
+		
 	}
 	
 	private List<MyObject> fetchData() {
@@ -118,8 +143,26 @@ public class BigTableController {
 		// put in control
 		//
 		tblObjects.setItems( FXCollections.observableList( objectsFromDataSource ));
-	}
 	
+		// Uncomment for "Scroll Time" blog post
+//		scrollEntireTable();
+	}
+
+	/**
+	 * Uncomment for "Scroll Time" blog post
+	 */
+/*	private void scrollEntireTable() {
+		new Thread() {
+			@Override
+			public void run() {				
+				for( int i=50; i<NUM_RECORDS; i=i+50 ) {
+					final int pos = i;
+					Platform.runLater(() -> tblObjects.scrollTo( pos ));					
+				}
+			}
+		}.start();
+	}
+*/	
 	@FXML
 	public void save() {
 
