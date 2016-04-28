@@ -5,6 +5,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.fxml.FXML;
 import javafx.geometry.Bounds;
 import javafx.geometry.Insets;
@@ -15,6 +18,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
+import javafx.util.Duration;
 
 public class WoodlandController {
 
@@ -23,15 +27,6 @@ public class WoodlandController {
 	
 	@FXML
 	Pane board;
-	
-	@FXML
-	Pane boardPaneRow0;
-
-	@FXML
-	Pane boardPaneRow1;
-
-	@FXML
-	Pane boardPaneRow2;
 	
 	@FXML 
 	Rectangle sq0_0;
@@ -75,23 +70,29 @@ public class WoodlandController {
 	
 	private boolean gpSelected = false;
 	
+	private double gpCenteringX = 0.0d;
+	private double gpCenteringY = 0.0d;
+	
+	private double mouseSelectOffsetX = 0.0d;
+	private double mouseSelectOffsetY = 0.0d;
+	
 	@FXML
 	public void initialize() {
 		
-		System.out.println("boardPaneRow0(" + boardPaneRow0.getLayoutX() + ", " + boardPaneRow0.getLayoutY() + ")");
-		System.out.println("boardPaneRow1(" + boardPaneRow1.getLayoutX() + ", " + boardPaneRow1.getLayoutY() + ")");
-		System.out.println("boardPaneRow2(" + boardPaneRow2.getLayoutX() + ", " + boardPaneRow2.getLayoutY() + ")");
+		gpCenteringX = gamePiece.getLayoutX();
+		gpCenteringY = gamePiece.getLayoutY();
 		
 		squares.addAll( Arrays.asList(sq0_0, sq0_1, sq0_2, sq1_0, sq1_1, sq1_2, sq2_0, sq2_1, sq2_2) );
 		
-		squares
-			.stream()
-			.forEach((sq) -> 
-				System.out.println(sq.getId() + "(" + sq.getLayoutX() + ", " + sq.getLayoutY() + ")")
-					);
-			
 		board.setOnMousePressed((evt) -> {			
 			if( selectGamePiece(evt.getSceneX(), evt.getSceneY()) ) {
+
+				Point2D evtPt = new Point2D(evt.getSceneX(), evt.getSceneY());
+				Point2D evtLocalPt = gamePiece.sceneToLocal(evtPt);
+				
+				mouseSelectOffsetX = evtLocalPt.getX();
+				mouseSelectOffsetY = evtLocalPt.getY();
+				
 				gamePiece.setOpacity( 0.4d );
 				gpSelected = true;
 			}
@@ -103,20 +104,19 @@ public class WoodlandController {
 				
 				Optional<Rectangle> onSquare = pickSquare( evt.getSceneX(), evt.getSceneY() );
 
-				System.out.println("scene ending pt=" + evt.getSceneX() + ", " + evt.getSceneY());
-				
-				if( onSquare.isPresent() ) {					
+				if( onSquare.isPresent() ) {
 					
-					System.out.println( "sq=" + onSquare.get().getId());
 					Point2D onSquarePt = new Point2D(onSquare.get().getLayoutX(), onSquare.get().getLayoutY());
-					System.out.println( "onSquarePt=" + onSquarePt );
-					Point2D onSquareParentPt = onSquare.get().localToParent(onSquarePt);
-					System.out.println( "onSquareParentPt=" + onSquareParentPt );					
-					Point2D onSquareScenePt = onSquare.get().localToScene( onSquarePt );
-					System.out.println( "onSquarePt (scene)=" + onSquareScenePt);
-					Point2D boardPt = board.sceneToLocal( onSquareScenePt );
-					System.out.println( "boardPt=" + boardPt);
-					gamePiece.relocate( boardPt.getX()+10, boardPt.getY()+10 );
+					
+					final Timeline timeline = new Timeline();
+					timeline.setCycleCount(1);
+					timeline.setAutoReverse(false);
+					timeline.getKeyFrames()
+								.add(new KeyFrame(Duration.millis(200), 
+										new KeyValue(gamePiece.layoutXProperty(), onSquarePt.getX()+gpCenteringX),
+										new KeyValue(gamePiece.layoutYProperty(), onSquarePt.getY()+gpCenteringY))
+										);
+					timeline.play();
 				}
 			}
 			
@@ -133,7 +133,7 @@ public class WoodlandController {
 				Point2D sceneEvtPt = new Point2D(evt.getSceneX(), evt.getSceneY());
 				Point2D parentEvtPt = board.sceneToLocal(sceneEvtPt);
 				Insets padding = boardContainer.getPadding();				
-				gamePiece.relocate( parentEvtPt.getX()-padding.getLeft(), parentEvtPt.getY()-padding.getTop());					
+				gamePiece.relocate( parentEvtPt.getX()-padding.getLeft()+mouseSelectOffsetX, parentEvtPt.getY()-padding.getTop()+mouseSelectOffsetY);					
 			}
 			
 			Optional<Rectangle> hoverSquare = pickSquare( evt.getSceneX(), evt.getSceneY() );
