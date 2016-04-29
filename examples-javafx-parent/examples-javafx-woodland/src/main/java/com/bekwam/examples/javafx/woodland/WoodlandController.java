@@ -60,21 +60,39 @@ public class WoodlandController {
 
 	/**
 	 * Convenience for working with squares all at once
-	 * 
 	 */
 	private final List<Rectangle> squares = new ArrayList<>();
 	
+	/**
+	 * Effect that will be recycled across squares
+	 */
 	private final DropShadow dropShadow = new DropShadow();
-	
+
+	/**
+	 * Keeps track of square so that it can be un-highlighted
+	 */
 	private Optional<Rectangle> lastHoverSquare = Optional.empty();
 	
+	/**
+	 * Overall control for whether or not there is a current selection
+	 */
 	private boolean gpSelected = false;
 	
 	private double gpCenteringX = 0.0d;
 	private double gpCenteringY = 0.0d;
 	
-	private double mouseSelectOffsetX = 0.0d;
-	private double mouseSelectOffsetY = 0.0d;
+	/**
+	 * (x,y) coordinates of placement of mouse within the ImageView
+	 */
+	private double selectInImageX = 0.0d;
+	private double selectInImageY = 0.0d;
+	
+	/**
+	 * Calculated value of center coordinate to help with selectInImage*
+	 * fields
+	 */
+	private double gpMidpointX = 0.0d;
+	private double gpMidpointY = 0.0d;
 	
 	@FXML
 	public void initialize() {
@@ -82,17 +100,22 @@ public class WoodlandController {
 		gpCenteringX = gamePiece.getLayoutX();
 		gpCenteringY = gamePiece.getLayoutY();
 		
+		Bounds gpBounds = gamePiece.getBoundsInLocal();
+		gpMidpointX = (gpBounds.getWidth())/2;
+		gpMidpointY = (gpBounds.getHeight())/2;
+		
 		squares.addAll( Arrays.asList(sq0_0, sq0_1, sq0_2, sq1_0, sq1_1, sq1_2, sq2_0, sq2_1, sq2_2) );
 		
 		board.setOnMousePressed((evt) -> {			
 			if( selectGamePiece(evt.getSceneX(), evt.getSceneY()) ) {
 
-				Point2D evtPt = new Point2D(evt.getSceneX(), evt.getSceneY());
-				Point2D evtLocalPt = gamePiece.sceneToLocal(evtPt);
+				Point2D selectInImageScenePt = new Point2D( evt.getSceneX(), evt.getSceneY() );
+				Point2D selectInImagePt = gamePiece.sceneToLocal( selectInImageScenePt );
 				
-				mouseSelectOffsetX = evtLocalPt.getX();
-				mouseSelectOffsetY = evtLocalPt.getY();
+				selectInImageX = gpMidpointX - selectInImagePt.getX();
+				selectInImageY = gpMidpointY - selectInImagePt.getY();
 				
+				System.out.println("in image=(" + selectInImageX + ", " + selectInImageY + ")");
 				gamePiece.setOpacity( 0.4d );
 				gpSelected = true;
 			}
@@ -133,7 +156,7 @@ public class WoodlandController {
 				Point2D sceneEvtPt = new Point2D(evt.getSceneX(), evt.getSceneY());
 				Point2D parentEvtPt = board.sceneToLocal(sceneEvtPt);
 				Insets padding = boardContainer.getPadding();				
-				gamePiece.relocate( parentEvtPt.getX()-padding.getLeft()+mouseSelectOffsetX, parentEvtPt.getY()-padding.getTop()+mouseSelectOffsetY);					
+				gamePiece.relocate( parentEvtPt.getX()-padding.getLeft()+selectInImageX, parentEvtPt.getY()-padding.getTop()+selectInImageY);					
 			}
 			
 			Optional<Rectangle> hoverSquare = pickSquare( evt.getSceneX(), evt.getSceneY() );
@@ -165,10 +188,12 @@ public class WoodlandController {
 				lastHoverSquare = hoverSquare;
 			}
 			
-		});
+		});	
 	}
 
 	private void clearSelection() {
+		selectInImageX = 0.0d;
+		selectInImageY = 0.0d;
 		gamePiece.setOpacity(1.0d);
 		gpSelected = false;
 	}
@@ -188,6 +213,10 @@ public class WoodlandController {
 	}
 	
 	private boolean inBoard(double sceneX, double sceneY) {
+		
+		// TODO: apply proper select offset depending on which side
+		// you may be heading off
+		
 		return isPicked( board, sceneX, sceneY );
 	}
 	
