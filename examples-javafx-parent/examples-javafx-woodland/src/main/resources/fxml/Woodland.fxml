@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.geometry.Rectangle2D?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.Pane?>
@@ -12,15 +13,19 @@
    <children>
       <Pane fx:id="board">
          <children>
-            <Rectangle fx:id="sq0_0" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
-            <Rectangle fx:id="sq0_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
-            <Rectangle fx:id="sq0_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
-            <Rectangle fx:id="sq1_0" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
-            <Rectangle fx:id="sq1_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="100.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
-            <Rectangle fx:id="sq1_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="200.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
-            <Rectangle fx:id="sq2_0" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutY="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
-            <Rectangle fx:id="sq2_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="100.0" layoutY="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
-            <Rectangle fx:id="sq2_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="200.0" layoutY="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+            <Group>
+               <children>
+                  <Rectangle fx:id="sq0_0" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq0_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq0_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq1_0" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq1_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="100.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq1_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="200.0" layoutY="100.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq2_0" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutY="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq2_1" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="100.0" layoutY="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+                  <Rectangle fx:id="sq2_2" arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="100.0" layoutX="200.0" layoutY="200.0" stroke="BLACK" strokeType="INSIDE" styleClass="square" width="100.0" />
+               </children>
+            </Group>
             <ImageView fx:id="gamePiece" depthTest="DISABLE" layoutX="10.0" layoutY="10.0" pickOnBounds="true" preserveRatio="true">
                <image>
                   <Image url="@../images/Hedgehog.png" />
