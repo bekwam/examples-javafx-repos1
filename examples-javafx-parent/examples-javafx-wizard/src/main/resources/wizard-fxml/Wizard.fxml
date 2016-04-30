@@ -17,8 +17,13 @@
       <Separator prefWidth="200.0" />
       <HBox alignment="TOP_RIGHT" spacing="4.0">
          <children>
-            <Button mnemonicParsing="false" onAction="#back" text="Back" />
-            <Button mnemonicParsing="false" onAction="#next" text="Next" />
+            <Button fx:id="btnCancel" cancelButton="true" mnemonicParsing="false" onAction="#cancel" text="Cancel">
+               <HBox.margin>
+                  <Insets right="8.0" />
+               </HBox.margin>
+            </Button>
+            <Button fx:id="btnBack" mnemonicParsing="false" onAction="#back" text="Back" />
+            <Button fx:id="btnNext" mnemonicParsing="false" onAction="#next" text="Next" />
          </children>
          <VBox.margin>
             <Insets />

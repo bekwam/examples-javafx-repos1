@@ -6,4 +6,11 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <artifactId>examples-javafx-wizard</artifactId>
+  <dependencies>
+  <dependency>
+    <groupId>com.google.inject</groupId>
+    <artifactId>guice</artifactId>
+    <version>4.0</version>
+  </dependency>
+  </dependencies>
 </project>
