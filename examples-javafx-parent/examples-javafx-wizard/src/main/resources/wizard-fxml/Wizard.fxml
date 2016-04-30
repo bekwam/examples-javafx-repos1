@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.wizard.WizardController">
+   <children>
+      <VBox fx:id="contentPanel" alignment="CENTER" minHeight="320.0" minWidth="568.0" VBox.vgrow="ALWAYS" />
+      <HBox fx:id="hboxIndicators" alignment="CENTER" spacing="2.0">
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </HBox>
+      <Separator prefWidth="200.0" />
+      <HBox alignment="TOP_RIGHT" spacing="4.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#back" text="Back" />
+            <Button mnemonicParsing="false" onAction="#next" text="Next" />
+         </children>
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <padding>
+            <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+         </padding>
+      </HBox>
+   </children>
+</VBox>
