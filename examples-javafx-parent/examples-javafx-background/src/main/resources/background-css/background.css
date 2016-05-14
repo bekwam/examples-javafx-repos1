@@ -1,0 +1,7 @@
+#vbox {
+    -fx-background-image: url("https://www.bekwam.com/images/bekwam_logo_hdr.png");
+    -fx-background-repeat: no-repeat;
+    -fx-background-position: center;
+}
+
+/* -fx-background-image: url("../background-images/clouds.svg.png"); */
