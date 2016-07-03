@@ -27,6 +27,7 @@
     <module>examples-javafx-woodland</module>
     <module>examples-javafx-wizard</module>
         <module>examples-javafx-tvtable</module>
+        <module>examples-javafx-cb-constants</module>
     </modules>
 
     <dependencies>
