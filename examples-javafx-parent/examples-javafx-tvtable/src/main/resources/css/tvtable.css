@@ -1,0 +1,48 @@
+.tvtable {
+    -fx-opacity: 0.7;
+    -fx-padding: 0;
+}
+
+.tvtable-container {
+    -fx-background-image: url("../images/pa_lake_beach.jpg");
+    -fx-background-position: center;
+}
+
+.tvtable-cell-container {
+    -fx-background-color: black;
+    -fx-alignment: center-left;
+    -fx-padding: 0 0 0 10px;
+}
+
+.tvtable-program-name, .tvtable-last-recording, .tvtable-status {
+    -fx-text-fill: white;
+    -fx-font-family: Arial;
+}
+
+.tvtable-program-name {
+    -fx-font-size: 48px;
+}
+
+.tvtable-last-recording {
+    -fx-font-size: 24px;
+}
+
+.tvtable-status {
+    -fx-font-size: 18px;
+    -fx-padding: 10px 2px 10px 2px;
+}
+
+.tvtable-list-cell-empty {
+    -fx-padding: 0;
+}
+
+.tvtable-list-cell{
+    -fx-cell-size: 120px;
+    -fx-padding: 1px 0 1px 0;
+}
+
+.tvtable-list-cell:focused, .tvtable-list-cell:focused:selected, .tvtable-list-cell:selected {
+    -fx-background-color: white;
+    -fx-padding: 8px 0 8px 0;
+}
+

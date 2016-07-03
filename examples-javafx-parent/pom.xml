@@ -26,6 +26,7 @@
     <module>examples-javafx-memory-tests</module>
     <module>examples-javafx-woodland</module>
     <module>examples-javafx-wizard</module>
+        <module>examples-javafx-tvtable</module>
     </modules>
 
     <dependencies>

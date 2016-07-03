@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" styleClass="tvtable-container" xmlns="http://javafx.com/javafx/8.0.65" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.bekwam.examples.javafx.tvtable.TVTableController">
+   <children>
+      <ListView fx:id="lvPrograms" styleClass="tvtable" VBox.vgrow="ALWAYS" />
+      <Label fx:id="lblStatus" styleClass="tvtable-status" text="Label" />
+   </children>
+</VBox>
